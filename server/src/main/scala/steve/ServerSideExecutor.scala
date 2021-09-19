@@ -16,11 +16,9 @@ object ServerSideExecutor {
 
       def run(hash: Hash): F[SystemState] = (hash == emptyHash)
         .guard[Option]
-        .as(KVState(Map.empty))
+        .as(SystemState(Map.empty))
         .liftTo[F](new Throwable("Unsupported hash!"))
 
     }
-
-  private final case class KVState(getAll: Map[String, String]) extends SystemState
 
 }
