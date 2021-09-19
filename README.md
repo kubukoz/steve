@@ -17,3 +17,8 @@ with a schedule planned to be every week or two.
 - Setup Scala Steward
 - Initialize client
 - Communicate with server
+
+## Episode 3
+
+- Client/server compatibility testing
+- Logging, error handling
