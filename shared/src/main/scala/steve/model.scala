@@ -35,6 +35,6 @@ object Build {
   val empty: Build = Build(Base.EmptyImage, Nil)
 }
 
-final case class Hash(value: Array[Byte]) derives Codec.AsObject, Schema
+final case class Hash(value: Vector[Byte]) derives Codec.AsObject, Schema
 
 final case class SystemState(all: Map[String, String]) derives Codec.AsObject, Schema
