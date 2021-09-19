@@ -19,13 +19,11 @@ object Main extends IOApp.Simple {
       .withPort(port"8080")
       .withHttpApp {
 
+        val exec = ServerSideExecutor.instance[IO]
+
         val endpoints: List[ServerEndpoint[_, _, _, Any, IO]] = List(
-          protocol.build.serverLogicInfallible { build =>
-            IO.println(build).as(Hash(Array()))
-          },
-          protocol.run.serverLogicInfallible { hash =>
-            IO.println(hash).as(SystemState(Map.empty))
-          },
+          protocol.build.serverLogicInfallible(exec.build),
+          protocol.run.serverLogicInfallible(exec.run),
         )
 
         Http4sServerInterpreter[IO]()

@@ -26,6 +26,7 @@ val server = project
       "org.http4s" %% "http4s-dsl" % "0.23.3",
       "org.http4s" %% "http4s-ember-server" % "0.23.3",
       "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % "0.19.0-M9",
+      "ch.qos.logback" % "logback-classic" % "1.2.3",
     ),
   )
   .dependsOn(shared)
