@@ -1,7 +1,7 @@
 val Versions =
   new {
     val tapir = "0.19.0-M9"
-    val http4s = "0.23.3"
+    val http4s = "0.23.4"
   }
 
 ThisBuild / scalaVersion := "3.1.0-RC2"
