@@ -1,0 +1,550 @@
+[
+  {
+    "name": "byte[]"
+  },
+  {
+    "name": "cats.effect.std.Semaphore$impl",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "cats.effect.unsafe.IORuntimeCompanionPlatform",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "cats.effect.unsafe.WorkStealingThreadPool",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "cats.parse.Parser0",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "cats.parse.Parser0[]"
+  },
+  {
+    "name": "cats.parse.Parser[]"
+  },
+  {
+    "name": "cats.parse.RadixNode[]"
+  },
+  {
+    "name": "ch.qos.logback.classic.PatternLayout",
+    "allPublicMethods": true,
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.DateConverter",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.LevelConverter",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.LineSeparatorConverter",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.LoggerConverter",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.MessageConverter",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.ThreadConverter",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "ch.qos.logback.core.ConsoleAppender",
+    "allPublicMethods": true,
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "fs2.Chunk$",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "fs2.io.net.Network$",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "fs2.io.net.NetworkCompanionPlatform$$anon$1",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "io.circe.Decoder$",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "io.circe.Decoder[]"
+  },
+  {
+    "name": "io.circe.Encoder$",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "io.circe.Encoder[]"
+  },
+  {
+    "name": "java.io.FilePermission"
+  },
+  {
+    "name": "java.lang.RuntimePermission"
+  },
+  {
+    "name": "java.lang.StackTraceElement[]"
+  },
+  {
+    "name": "java.lang.String[]"
+  },
+  {
+    "name": "java.lang.invoke.VarHandle",
+    "methods": [{ "name": "releaseFence", "parameterTypes": [] }]
+  },
+  {
+    "name": "java.net.NetPermission"
+  },
+  {
+    "name": "java.net.SocketPermission"
+  },
+  {
+    "name": "java.net.URLPermission",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.String", "java.lang.String"]
+      }
+    ]
+  },
+  {
+    "name": "java.security.AlgorithmParametersSpi"
+  },
+  {
+    "name": "java.security.AllPermission"
+  },
+  {
+    "name": "java.security.KeyStoreSpi"
+  },
+  {
+    "name": "java.security.MessageDigestSpi"
+  },
+  {
+    "name": "java.security.SecureRandomParameters"
+  },
+  {
+    "name": "java.security.SecurityPermission"
+  },
+  {
+    "name": "java.util.PropertyPermission"
+  },
+  {
+    "name": "javax.management.ObjectName"
+  },
+  {
+    "name": "javax.security.auth.x500.X500Principal",
+    "fields": [{ "name": "thisX500Name" }],
+    "methods": [
+      { "name": "<init>", "parameterTypes": ["sun.security.x509.X500Name"] }
+    ]
+  },
+  {
+    "name": "magnolia.CallByNeed",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "magnolia.CaseClass$Param[]"
+  },
+  {
+    "name": "magnolia.SealedTrait$Subtype[]"
+  },
+  {
+    "name": "org.http4s.Header$Raw$",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "org.http4s.Headers$",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "org.http4s.MediaType$",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "org.http4s.MimeDB$application$",
+    "fields": [
+      { "name": "0bitmap$1" },
+      { "name": "10bitmap$1" },
+      { "name": "11bitmap$1" },
+      { "name": "12bitmap$1" },
+      { "name": "13bitmap$1" },
+      { "name": "14bitmap$1" },
+      { "name": "15bitmap$1" },
+      { "name": "16bitmap$1" },
+      { "name": "17bitmap$1" },
+      { "name": "18bitmap$1" },
+      { "name": "19bitmap$1" },
+      { "name": "1bitmap$1" },
+      { "name": "20bitmap$1" },
+      { "name": "21bitmap$1" },
+      { "name": "22bitmap$1" },
+      { "name": "23bitmap$1" },
+      { "name": "24bitmap$1" },
+      { "name": "25bitmap$1" },
+      { "name": "26bitmap$1" },
+      { "name": "27bitmap$1" },
+      { "name": "28bitmap$1" },
+      { "name": "29bitmap$1" },
+      { "name": "2bitmap$1" },
+      { "name": "30bitmap$1" },
+      { "name": "31bitmap$1" },
+      { "name": "32bitmap$1" },
+      { "name": "33bitmap$1" },
+      { "name": "34bitmap$1" },
+      { "name": "35bitmap$1" },
+      { "name": "36bitmap$1" },
+      { "name": "37bitmap$1" },
+      { "name": "38bitmap$1" },
+      { "name": "39bitmap$1" },
+      { "name": "3bitmap$1" },
+      { "name": "40bitmap$1" },
+      { "name": "41bitmap$1" },
+      { "name": "42bitmap$1" },
+      { "name": "43bitmap$1" },
+      { "name": "44bitmap$1" },
+      { "name": "45bitmap$1" },
+      { "name": "46bitmap$1" },
+      { "name": "47bitmap$1" },
+      { "name": "48bitmap$1" },
+      { "name": "49bitmap$1" },
+      { "name": "4bitmap$1" },
+      { "name": "50bitmap$1" },
+      { "name": "51bitmap$1" },
+      { "name": "5bitmap$1" },
+      { "name": "6bitmap$1" },
+      { "name": "7bitmap$1" },
+      { "name": "8bitmap$1" },
+      { "name": "9bitmap$1" }
+    ]
+  },
+  {
+    "name": "org.http4s.MimeDB$audio$",
+    "fields": [
+      { "name": "0bitmap$2" },
+      { "name": "1bitmap$2" },
+      { "name": "2bitmap$2" },
+      { "name": "3bitmap$2" },
+      { "name": "4bitmap$2" },
+      { "name": "5bitmap$2" }
+    ]
+  },
+  {
+    "name": "org.http4s.MimeDB$chemical$",
+    "fields": [{ "name": "0bitmap$3" }]
+  },
+  {
+    "name": "org.http4s.MimeDB$font$",
+    "fields": [{ "name": "0bitmap$4" }]
+  },
+  {
+    "name": "org.http4s.MimeDB$image$",
+    "fields": [
+      { "name": "0bitmap$5" },
+      { "name": "1bitmap$3" },
+      { "name": "2bitmap$3" },
+      { "name": "3bitmap$3" }
+    ]
+  },
+  {
+    "name": "org.http4s.MimeDB$message$",
+    "fields": [{ "name": "0bitmap$6" }]
+  },
+  {
+    "name": "org.http4s.MimeDB$model$",
+    "fields": [{ "name": "0bitmap$7" }, { "name": "1bitmap$4" }]
+  },
+  {
+    "name": "org.http4s.MimeDB$multipart$",
+    "fields": [{ "name": "0bitmap$8" }]
+  },
+  {
+    "name": "org.http4s.MimeDB$text$",
+    "fields": [
+      { "name": "0bitmap$9" },
+      { "name": "1bitmap$5" },
+      { "name": "2bitmap$4" },
+      { "name": "3bitmap$4" }
+    ]
+  },
+  {
+    "name": "org.http4s.MimeDB$video$",
+    "fields": [
+      { "name": "0bitmap$10" },
+      { "name": "1bitmap$6" },
+      { "name": "2bitmap$5" },
+      { "name": "3bitmap$5" }
+    ]
+  },
+  {
+    "name": "org.http4s.MimeDB$x_conference$",
+    "fields": [{ "name": "0bitmap$11" }]
+  },
+  {
+    "name": "org.http4s.MimeDB$x_shader$",
+    "fields": [{ "name": "0bitmap$12" }]
+  },
+  {
+    "name": "org.http4s.Query",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "org.http4s.Query$",
+    "fields": [{ "name": "0bitmap$2" }]
+  },
+  {
+    "name": "org.http4s.Request",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "org.http4s.Uri",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "org.http4s.Uri$",
+    "fields": [{ "name": "0bitmap$3" }]
+  },
+  {
+    "name": "org.http4s.Uri$Path$",
+    "fields": [{ "name": "0bitmap$2" }]
+  },
+  {
+    "name": "org.typelevel.ci.package$CIStringSyntax",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "scala.Tuple2[]"
+  },
+  {
+    "name": "scala.util.Either[]"
+  },
+  {
+    "name": "scodec.bits.ByteVector",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "steve.Build$",
+    "fields": [{ "name": "0bitmap$14" }]
+  },
+  {
+    "name": "steve.Build$$anon$1",
+    "fields": [{ "name": "0bitmap$3" }]
+  },
+  {
+    "name": "steve.Build$$anon$14",
+    "fields": [{ "name": "0bitmap$4" }]
+  },
+  {
+    "name": "steve.Build$$anon$15",
+    "fields": [{ "name": "0bitmap$5" }]
+  },
+  {
+    "name": "steve.Build$$anon$5",
+    "fields": [{ "name": "0bitmap$9" }]
+  },
+  {
+    "name": "steve.Build$$anon$9",
+    "fields": [{ "name": "0bitmap$13" }]
+  },
+  {
+    "name": "steve.Build$Base$",
+    "fields": [{ "name": "0bitmap$6" }]
+  },
+  {
+    "name": "steve.Build$Command$",
+    "fields": [{ "name": "0bitmap$12" }]
+  },
+  {
+    "name": "steve.Hash$",
+    "fields": [{ "name": "0bitmap$16" }]
+  },
+  {
+    "name": "steve.Hash$$anon$1",
+    "fields": [{ "name": "0bitmap$15" }]
+  },
+  {
+    "name": "steve.SystemState$",
+    "fields": [{ "name": "0bitmap$18" }]
+  },
+  {
+    "name": "steve.SystemState$$anon$1",
+    "fields": [{ "name": "0bitmap$17" }]
+  },
+  {
+    "name": "sttp.model.Header$",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "sttp.tapir.SchemaType$SProductField[]"
+  },
+  {
+    "name": "sttp.tapir.internal.package$ParamsAsAny",
+    "fields": [{ "name": "0bitmap$1" }]
+  },
+  {
+    "name": "sun.misc.Unsafe",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "sun.security.pkcs12.PKCS12KeyStore",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.pkcs12.PKCS12KeyStore$DualFormatPKCS12",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.provider.JavaKeyStore$JKS",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.provider.NativePRNG",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.provider.SHA",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.provider.X509Factory",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.rsa.RSAKeyFactory$Legacy",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.ssl.KeyManagerFactoryImpl$SunX509",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.ssl.SSLContextImpl$DefaultSSLContext",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.ssl.TrustManagerFactoryImpl$PKIXFactory",
+    "methods": [{ "name": "<init>", "parameterTypes": [] }]
+  },
+  {
+    "name": "sun.security.x509.AuthorityInfoAccessExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.AuthorityKeyIdentifierExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.BasicConstraintsExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.CRLDistributionPointsExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.CertificatePoliciesExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.ExtendedKeyUsageExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.IssuerAlternativeNameExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.KeyUsageExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.NetscapeCertTypeExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.PrivateKeyUsageExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.SubjectAlternativeNameExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  },
+  {
+    "name": "sun.security.x509.SubjectKeyIdentifierExtension",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": ["java.lang.Boolean", "java.lang.Object"]
+      }
+    ]
+  }
+]
