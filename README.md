@@ -20,5 +20,11 @@ with a schedule planned to be every week or two.
 
 ## Episode 3
 
+- Build client with native-image
+- Add logback to client
+- Temporarily silence client errors
+
+## Episode ???
+
 - Client/server compatibility testing
 - Logging, error handling
