@@ -12,7 +12,7 @@ with a schedule planned to be every week or two.
 - Initial model design
 - First piece of logic and test
 
-## Episode 2
+## [Episode 2](https://www.youtube.com/watch?v=f4N8Xu2BVkA)
 
 - Setup Scala Steward
 - Initialize client
