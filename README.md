@@ -18,7 +18,7 @@ with a schedule planned to be every week or two.
 - Initialize client
 - Communicate with server
 
-## Episode 3
+## [Episode 3](https://www.youtube.com/watch?v=e2Q3zU1lRkY)
 
 - Build client with native-image
 - Add logback to client
