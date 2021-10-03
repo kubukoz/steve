@@ -1,8 +1,8 @@
 val Versions =
   new {
-    val tapir = "0.19.0-M9"
-    val http4s = "0.23.4"
-    val logback = "1.2.4"
+    val tapir = "0.19.0-M10"
+    val http4s = "0.23.3"
+    val logback = "1.2.6"
   }
 
 ThisBuild / scalaVersion := "3.1.0-RC2"
@@ -14,7 +14,7 @@ val commonSettings: Seq[Setting[_]] = Seq(
   libraryDependencies ++= Seq(
     "org.typelevel" %% "cats-effect" % "3.2.9",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
-    "org.typelevel" %% "munit-cats-effect-3" % "1.0.5" % Test,
+    "org.typelevel" %% "munit-cats-effect-3" % "1.0.6" % Test,
   ),
 )
 
@@ -46,6 +46,7 @@ val server = project
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-dsl" % Versions.http4s,
       "org.http4s" %% "http4s-ember-server" % Versions.http4s,
+      "org.http4s" %% "http4s-circe" % Versions.http4s,
       "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % Versions.tapir,
       "ch.qos.logback" % "logback-classic" % Versions.logback,
     ),
@@ -65,7 +66,13 @@ val client = project
   .enablePlugins(NativeImagePlugin)
   .dependsOn(shared)
 
+val e2e = project
+  .settings(
+    commonSettings
+  )
+  .dependsOn(client, server)
+
 val root = project
   .in(file("."))
   .settings(publish := {}, publish / skip := true)
-  .aggregate(server, client, shared)
+  .aggregate(server, client, e2e, shared)
