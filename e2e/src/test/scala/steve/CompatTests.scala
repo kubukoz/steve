@@ -28,9 +28,11 @@ class CompatTests extends CatsEffectSuite {
     }
 
   val goodBuild = Build.empty
+  val badBuild = Build(Build.Base.EmptyImage, List(Build.Command.Delete("k")))
   val goodHash = Hash(Vector.empty)
   val badHash = Hash(Vector(Byte.MaxValue))
 
+  val badBuildResult = GenericServerError(message = "Bad build")
   val goodHashResult = SystemState(Map("k1" -> "v1"))
   val badHashResult = GenericServerError(message = "Unknown hash")
 
@@ -38,7 +40,8 @@ class CompatTests extends CatsEffectSuite {
     Routing.instance(
       testExecutor(
         builds = Map(
-          goodBuild -> goodHash.asRight
+          goodBuild -> goodHash.asRight,
+          badBuild -> badBuildResult.asLeft,
         ),
         runs = Map(
           goodHash -> goodHashResult.asRight,
@@ -52,8 +55,15 @@ class CompatTests extends CatsEffectSuite {
 
   test("build a build - success case") {
     assertIO(
-      exec.build(Build.empty),
+      exec.build(goodBuild),
       goodHash,
+    )
+  }
+
+  test("build a build - generic error case") {
+    assertIO(
+      exec.build(badBuild).attempt,
+      Left(badBuildResult),
     )
   }
 
