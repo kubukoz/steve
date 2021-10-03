@@ -65,7 +65,13 @@ val client = project
   .enablePlugins(NativeImagePlugin)
   .dependsOn(shared)
 
+val e2e = project
+  .settings(
+    commonSettings
+  )
+  .dependsOn(client, server)
+
 val root = project
   .in(file("."))
   .settings(publish := {}, publish / skip := true)
-  .aggregate(server, client, shared)
+  .aggregate(server, client, e2e, shared)

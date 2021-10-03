@@ -12,12 +12,12 @@ object ServerSideExecutor {
       def build(build: Build): F[Hash] = (build == Build.empty)
         .guard[Option]
         .as(emptyHash)
-        .liftTo[F](new Throwable("Unsupported build!"))
+        .liftTo[F](GenericServerError("Unsupported build!"))
 
       def run(hash: Hash): F[SystemState] = (hash == emptyHash)
         .guard[Option]
         .as(SystemState(Map.empty))
-        .liftTo[F](new Throwable("Unsupported hash!"))
+        .liftTo[F](GenericServerError("Unsupported hash!"))
 
     }
 
