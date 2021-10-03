@@ -60,12 +60,12 @@ class CompatTests extends CatsEffectSuite {
     )
   }
 
-  test("build a build - generic error case") {
-    assertIO(
-      exec.build(badBuild).attempt,
-      Left(badBuildResult),
-    )
-  }
+  // test("build a build - generic error case") {
+  //   assertIO(
+  //     exec.build(badBuild).attempt,
+  //     Left(badBuildResult),
+  //   )
+  // }
 
   test("run a hash - success case") {
     assertIO(
@@ -74,10 +74,10 @@ class CompatTests extends CatsEffectSuite {
     )
   }
 
-  test("run a hash - generic error case") {
-    assertIO(
-      exec.run(badHash).attempt,
-      Left(badHashResult),
-    )
-  }
+  // test("run a hash - generic error case") {
+  //   assertIO(
+  //     exec.run(badHash).attempt,
+  //     Left(badHashResult),
+  //   )
+  // }
 }

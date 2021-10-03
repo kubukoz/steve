@@ -9,17 +9,16 @@ object protocol {
   import sttp.tapir._
   import sttp.tapir.json.circe._
 
-  private val base = endpoint
-    .in("api")
-    .errorOut(jsonBody[GenericServerError].and(statusCode(StatusCode.InternalServerError)))
+  private val base = infallibleEndpoint.in("api")
 
-  val build: Endpoint[Build, GenericServerError, Hash, Any] = base
+  val build: Endpoint[Build, Build.BuildError, Hash, Any] = base
     .put
     .in("build")
     .in(jsonBody[Build])
     .out(jsonBody[Hash])
+    .errorOut(statusCode(StatusCode.UnprocessableEntity).and(jsonBody[Build.BuildError]))
 
-  val run: Endpoint[Hash, GenericServerError, SystemState, Any] = base
+  val run: Endpoint[Hash, Nothing, SystemState, Any] = base
     .post
     .in("run")
     .in(jsonBody[Hash])

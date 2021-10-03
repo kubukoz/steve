@@ -18,6 +18,14 @@ final case class Build(
 
 object Build {
 
+  sealed trait BuildError extends Exception with Product with Serializable
+    derives Codec.AsObject,
+      Schema
+
+  object BuildError {
+    final case class InvalidBase(base: Base) extends BuildError
+  }
+
   sealed trait Base extends Product with Serializable derives Codec.AsObject, Schema
 
   object Base {
