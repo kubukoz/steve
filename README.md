@@ -24,7 +24,7 @@ with a schedule planned to be every week or two.
 - Add logback to client
 - Temporarily silence client errors
 
-## Episode ???
+## Episode 4
 
-- Client/server compatibility testing
-- Logging, error handling
+- Client/server compatibility testing - example-based
+- Error handling - in progress
