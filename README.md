@@ -5,6 +5,14 @@ This is the main repository for Steve, a fake Docker clone that I'm making as pa
 All development and design of this project is going to be recorded and published on YT,
 with a schedule planned to be every week or two.
 
+## Community implementations
+
+These are the projects of my viewers who are following along (the ones I've found) - if you want yours added, send a PR! :)
+
+- https://github.com/Bunyod/steve
+- https://github.com/lgajowy/steve
+- https://github.com/lenguyenthanh/steve
+
 ## [Episode 1](https://www.youtube.com/watch?v=EIE-6gx_qi0)
 
 - Project setup
