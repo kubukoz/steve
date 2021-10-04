@@ -46,7 +46,6 @@ val server = project
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-dsl" % Versions.http4s,
       "org.http4s" %% "http4s-ember-server" % Versions.http4s,
-      "org.http4s" %% "http4s-circe" % Versions.http4s,
       "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % Versions.tapir,
       "ch.qos.logback" % "logback-classic" % Versions.logback,
     ),

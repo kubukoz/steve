@@ -32,9 +32,9 @@ class CompatTests extends CatsEffectSuite {
   val goodHash = Hash(Vector.empty)
   val badHash = Hash(Vector(Byte.MaxValue))
 
-  val badBuildResult = GenericServerError(message = "Bad build")
+  val badBuildResult = new Exception("Bad build")
   val goodHashResult = SystemState(Map("k1" -> "v1"))
-  val badHashResult = GenericServerError(message = "Unknown hash")
+  val badHashResult = new Exception("Unknown hash")
 
   val client = Client.fromHttpApp[IO](
     Routing.instance(
@@ -60,12 +60,12 @@ class CompatTests extends CatsEffectSuite {
     )
   }
 
-  // test("build a build - generic error case") {
-  //   assertIO(
-  //     exec.build(badBuild).attempt,
-  //     Left(badBuildResult),
-  //   )
-  // }
+  test("build a build - generic error case") {
+    assertIO(
+      exec.build(badBuild).attempt,
+      Left(GenericServerError("unhandled exception")),
+    )
+  }
 
   test("run a hash - success case") {
     assertIO(
@@ -74,10 +74,10 @@ class CompatTests extends CatsEffectSuite {
     )
   }
 
-  // test("run a hash - generic error case") {
-  //   assertIO(
-  //     exec.run(badHash).attempt,
-  //     Left(badHashResult),
-  //   )
-  // }
+  test("run a hash - generic error case") {
+    assertIO(
+      exec.run(badHash).attempt,
+      Left(GenericServerError("unhandled exception")),
+    )
+  }
 }
