@@ -1,11 +1,11 @@
 val Versions =
   new {
-    val tapir = "0.19.0-M10"
-    val http4s = "0.23.3"
+    val tapir = "0.19.0-M11"
+    val http4s = "0.23.5"
     val logback = "1.2.6"
   }
 
-ThisBuild / scalaVersion := "3.1.0-RC2"
+ThisBuild / scalaVersion := "3.1.0-RC3"
 ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 
@@ -15,6 +15,7 @@ val commonSettings: Seq[Setting[_]] = Seq(
     "org.typelevel" %% "cats-effect" % "3.2.9",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "org.typelevel" %% "munit-cats-effect-3" % "1.0.6" % Test,
+    compilerPlugin("org.polyvariant" % "better-tostring" % "0.3.9" cross CrossVersion.full),
   ),
 )
 
