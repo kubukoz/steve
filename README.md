@@ -38,4 +38,6 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Error handling
 
 ## Episode ???
+
+- Implement real business logic
 - Logging unification
