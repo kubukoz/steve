@@ -5,18 +5,9 @@ import cats.effect.IO
 import sttp.tapir.client.http4s.Http4sClientInterpreter
 import org.http4s.client.Client
 import cats.effect.kernel.Async
-import cats.implicits._
+import cats.implicits.*
 
 class CompatTests extends CatsEffectSuite {
-
-  def testExecutor(
-    buildImpl: Map[Build, Either[Throwable, Hash]],
-    runImpl: Map[Hash, Either[Throwable, SystemState]],
-  ): Executor[IO] =
-    new Executor[IO] {
-      def build(build: Build): IO[Hash] = buildImpl(build).liftTo[IO]
-      def run(hash: Hash): IO[SystemState] = runImpl(hash).liftTo[IO]
-    }
 
   given Http4sClientInterpreter[IO] = Http4sClientInterpreter[IO]()
 
@@ -41,7 +32,7 @@ class CompatTests extends CatsEffectSuite {
   val unexpectedFailingHash: Hash = Hash(Vector(42))
   val goodRunResult: SystemState = SystemState(Map.empty)
 
-  val exec: Executor[IO] = testExecutor(
+  val exec: Executor[IO] = TestExecutor.instance(
     Map(
       goodBuild -> goodBuildResult.asRight,
       unknownBaseBuild -> unknownBaseError.asLeft,
