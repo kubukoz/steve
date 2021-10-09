@@ -22,12 +22,25 @@ class CompatTests extends CatsEffectSuite {
 
   val goodBuild: Build = Build.empty
   val goodBuildResult: Hash = Hash(Vector.empty)
+
+  val unexpectedFailingBuild: Build = Build(
+    Build.Base.EmptyImage,
+    List(steve.Build.Command.Delete("k")),
+  )
+
   val goodHash: Hash = Hash(Vector.empty)
+  val unexpectedFailingHash: Hash = Hash(Vector(42))
   val goodRunResult: SystemState = SystemState(Map.empty)
 
   val exec: Executor[IO] = testExecutor(
-    Map(goodBuild -> goodBuildResult.asRight),
-    Map(goodHash -> goodRunResult.asRight),
+    Map(
+      goodBuild -> goodBuildResult.asRight,
+      unexpectedFailingBuild -> new Throwable("build internal error").asLeft,
+    ),
+    Map(
+      goodHash -> goodRunResult.asRight,
+      unexpectedFailingHash -> new Throwable("run internal error").asLeft,
+    ),
   )
 
   val client = ClientSideExecutor.instance[IO](
@@ -38,7 +51,7 @@ class CompatTests extends CatsEffectSuite {
     )
   )
 
-  test("Build image successfully") {
+  test("Build image - success") {
 
     assertIO(
       client.build(goodBuild),
@@ -46,11 +59,27 @@ class CompatTests extends CatsEffectSuite {
     )
   }
 
-  test("Run hash successfully") {
+  test("Build image - unexpected error") {
+
+    assertIO(
+      client.build(unexpectedFailingBuild).attempt,
+      GenericServerError("server failed").asLeft,
+    )
+  }
+
+  test("Run hash - success") {
 
     assertIO(
       client.run(goodHash),
       goodRunResult,
+    )
+  }
+
+  test("Run hash - unexpected error") {
+
+    assertIO(
+      client.run(unexpectedFailingHash).attempt,
+      GenericServerError("server failed").asLeft,
     )
   }
 }

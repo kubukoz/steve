@@ -1,9 +1,18 @@
 package steve
 
+import cats.data.Kleisli
+import cats.effect.kernel.Async
+import cats.implicits.*
 import org.http4s.HttpApp
+import org.http4s.dsl.Http4sDsl
+import sttp.model.StatusCode
+import sttp.tapir.*
+import sttp.tapir.json.circe.*
 import sttp.tapir.server.ServerEndpoint
 import sttp.tapir.server.http4s.Http4sServerInterpreter
-import cats.effect.kernel.Async
+import sttp.tapir.server.http4s.Http4sServerOptions
+import sttp.tapir.server.interceptor.ValuedEndpointOutput
+import sttp.tapir.server.interceptor.exception.ExceptionHandler
 
 object Routing {
 
@@ -13,7 +22,19 @@ object Routing {
       protocol.run.serverLogicInfallible(exec.run),
     )
 
-    Http4sServerInterpreter[F]()
+    Http4sServerInterpreter[F](
+      Http4sServerOptions
+        .customInterceptors[F, F]
+        .exceptionHandler(_ =>
+          Some(
+            ValuedEndpointOutput(
+              jsonBody[GenericServerError].and(statusCode(StatusCode.InternalServerError)),
+              GenericServerError("server failed"),
+            )
+          )
+        )
+        .options
+    )
       .toRoutes(endpoints)
       .orNotFound
   }
