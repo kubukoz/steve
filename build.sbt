@@ -5,7 +5,7 @@ val Versions =
     val logback = "1.2.6"
   }
 
-ThisBuild / scalaVersion := "3.1.0-RC3"
+ThisBuild / scalaVersion := "3.1.0-RC2"
 ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 
@@ -65,6 +65,10 @@ val client = project
   )
   .enablePlugins(NativeImagePlugin)
   .dependsOn(shared)
+
+val e2e = project
+  .settings(commonSettings)
+  .dependsOn(server, client)
 
 val root = project
   .in(file("."))
