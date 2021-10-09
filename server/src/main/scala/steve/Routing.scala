@@ -18,21 +18,21 @@ object Routing {
 
   def instance[F[_]: Async](exec: Executor[F]): HttpApp[F] = {
     val endpoints: List[ServerEndpoint[_, _, _, Any, F]] = List(
-      protocol.build.serverLogicInfallible(exec.build),
+      protocol.build.serverLogicRecoverErrors(exec.build),
       protocol.run.serverLogicInfallible(exec.run),
     )
 
     Http4sServerInterpreter[F](
       Http4sServerOptions
         .customInterceptors[F, F]
-        .exceptionHandler(_ =>
+        .exceptionHandler { ex =>
           Some(
             ValuedEndpointOutput(
               jsonBody[GenericServerError].and(statusCode(StatusCode.InternalServerError)),
               GenericServerError("server failed"),
             )
           )
-        )
+        }
         .options
     )
       .toRoutes(endpoints)
