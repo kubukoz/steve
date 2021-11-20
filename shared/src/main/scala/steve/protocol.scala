@@ -10,14 +10,14 @@ object protocol {
 
   private val base = infallibleEndpoint.in("api")
 
-  val build: Endpoint[Build, Build.Error, Hash, Any] = base
+  val build: PublicEndpoint[Build, Build.Error, Hash, Any] = base
     .put
     .in("build")
     .in(jsonBody[Build])
     .out(jsonBody[Hash])
     .errorOut(statusCode(StatusCode.UnprocessableEntity).and(jsonBody[Build.Error]))
 
-  val run: Endpoint[Hash, Nothing, SystemState, Any] = base
+  val run: PublicEndpoint[Hash, Nothing, SystemState, Any] = base
     .post
     .in("run")
     .in(jsonBody[Hash])

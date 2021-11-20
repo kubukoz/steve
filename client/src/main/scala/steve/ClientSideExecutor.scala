@@ -4,8 +4,9 @@ import cats.effect.MonadCancelThrow
 import org.http4s.client.Client
 import sttp.tapir.client.http4s.Http4sClientInterpreter
 import cats.implicits.*
-import sttp.tapir.Endpoint
+import sttp.tapir.PublicEndpoint
 import org.http4s.Status
+import org.http4s.implicits.*
 
 object ClientSideExecutor {
 
@@ -16,9 +17,12 @@ object ClientSideExecutor {
   ): Executor[F] =
     new Executor[F] {
 
-      private def run[I, E <: Throwable, O](endpoint: Endpoint[I, E, O, Any], input: I): F[O] = {
+      private def run[I, E <: Throwable, O](
+        endpoint: PublicEndpoint[I, E, O, Any],
+        input: I,
+      ): F[O] = {
         val (req, handler) = summon[Http4sClientInterpreter[F]]
-          .toRequestUnsafe(endpoint, Some("http://localhost:8080"))
+          .toRequestUnsafe(endpoint, Some(uri"http://localhost:8080"))
           .apply(input)
 
         client
