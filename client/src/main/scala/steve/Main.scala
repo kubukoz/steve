@@ -22,7 +22,7 @@ object Main extends IOApp.Simple {
       val exec = ClientSideExecutor
         .instance[IO](client)
 
-      //todo: better logging
+      // todo: better logging
       logger.info("Building base image") *>
         exec
           .build(Build.empty)
