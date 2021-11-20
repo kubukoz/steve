@@ -3,11 +3,9 @@ package steve
 import io.circe.Codec
 import sttp.tapir.Schema
 
-sealed trait Command extends Product with Serializable
-
-object Command {
-  final case class Build(build: steve.Build) extends Command
-  final case class Run(hash: Hash) extends Command
+enum Command {
+  case Build(build: steve.Build)
+  case Run(hash: Hash)
 }
 
 final case class Build(
@@ -18,26 +16,20 @@ final case class Build(
 
 object Build {
 
-  sealed trait Base extends Product with Serializable derives Codec.AsObject, Schema
-
-  object Base {
-    case object EmptyImage extends Base
-    final case class ImageReference(hash: Hash) extends Base
+  enum Base derives Codec.AsObject, Schema {
+    case EmptyImage
+    case ImageReference(hash: Hash)
   }
 
-  sealed trait Command extends Product with Serializable derives Codec.AsObject, Schema
-
-  object Command {
-    final case class Upsert(key: String, value: String) extends Command
-    final case class Delete(key: String) extends Command
+  enum Command derives Codec.AsObject, Schema {
+    case Upsert(key: String, value: String)
+    case Delete(key: String)
   }
 
   val empty: Build = Build(Base.EmptyImage, Nil)
 
-  sealed trait Error extends Exception with Product with Serializable derives Codec.AsObject, Schema
-
-  object Error {
-    final case class UnknownBase(hash: Hash) extends Error
+  enum Error extends Exception derives Codec.AsObject, Schema {
+    case UnknownBase(hash: Hash)
   }
 
 }
