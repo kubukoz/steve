@@ -15,6 +15,7 @@ val commonSettings: Seq[Setting[_]] = Seq(
     "org.typelevel" %% "cats-effect" % "3.2.9",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "org.typelevel" %% "munit-cats-effect-3" % "1.0.6" % Test,
+    "org.scalameta" %% "munit-scalacheck" % "0.7.29" % Test,
     compilerPlugin("org.polyvariant" % "better-tostring" % "0.3.11" cross CrossVersion.full),
   ),
 )
@@ -53,6 +54,7 @@ val server = project
       "ch.qos.logback" % "logback-classic" % Versions.logback,
       "org.http4s" %% "http4s-circe" % Versions.http4s % Test,
       "org.http4s" %% "http4s-client" % Versions.http4s % Test,
+      "dev.optics" %% "monocle-core" % "3.1.0",
     ),
   )
   .dependsOn(full(shared))
