@@ -32,7 +32,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Add logback to client
 - Temporarily silence client errors
 
-## Episode 4
+## [Episode 4](https://www.youtube.com/watch?v=mVU6rNmJNG0)
 
 - Client/server compatibility testing
 - Error handling
