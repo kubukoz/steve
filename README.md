@@ -37,7 +37,10 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Client/server compatibility testing
 - Error handling
 
+## Episode 5
+
+- Implement basic interpreter for build commands
+
 ## Episode ???
 
-- Implement real business logic
 - Logging unification
