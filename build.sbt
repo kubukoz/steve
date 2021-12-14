@@ -2,7 +2,7 @@ val Versions =
   new {
     val tapir = "0.19.0"
     val http4s = "0.23.6"
-    val logback = "1.2.7"
+    val logback = "1.2.8"
   }
 
 ThisBuild / scalaVersion := "3.1.0"
