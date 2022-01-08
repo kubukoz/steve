@@ -37,7 +37,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Client/server compatibility testing
 - Error handling
 
-## Episode 5
+## [Episode 5](https://youtu.be/jBU7ZIrtPgU)
 
 - Implement basic interpreter for build commands
 
