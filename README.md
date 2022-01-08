@@ -41,6 +41,10 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Implement basic interpreter for build commands
 
+## Episode 6
+
+- Initialize Registry, Resolver
+
 ## Episode ???
 
 - Logging unification
