@@ -3,7 +3,7 @@ package steve
 import cats.implicits.*
 import cats.Applicative
 import cats.data.State
-import monocle.syntax.all._
+import monocle.syntax.all.*
 
 trait Interpreter[F[_]] {
   def interpret(build: ResolvedBuild): F[SystemState]

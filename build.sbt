@@ -9,8 +9,12 @@ ThisBuild / scalaVersion := "3.1.0"
 ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
+//
 val commonSettings: Seq[Setting[_]] = Seq(
   scalacOptions -= "-Xfatal-warnings",
+  scalacOptions += "-source:future",
   libraryDependencies ++= Seq(
     "org.typelevel" %% "cats-effect" % "3.3.3",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",

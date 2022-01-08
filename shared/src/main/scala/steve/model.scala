@@ -38,6 +38,7 @@ object Build {
 
   object Error {
     final case class UnknownBase(hash: Hash) extends Error
+    final case class UnknownHash(hash: Hash) extends Error
   }
 
 }
