@@ -45,6 +45,12 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Initialize Registry, Resolver
 
+## Episode 7
+
+- Add tests for Registry/Resolver
+- Client methods for viewing the registry?
+- Stateless hash calculation?
+
 ## Episode ???
 
 - Logging unification
