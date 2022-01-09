@@ -12,7 +12,7 @@ ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 val commonSettings: Seq[Setting[_]] = Seq(
   scalacOptions -= "-Xfatal-warnings",
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-effect" % "3.3.3",
+    "org.typelevel" %% "cats-effect" % "3.3.4",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "org.typelevel" %% "munit-cats-effect-3" % "1.0.7" % Test,
     compilerPlugin("org.polyvariant" % "better-tostring" % "0.3.12" cross CrossVersion.full),
