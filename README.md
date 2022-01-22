@@ -13,6 +13,9 @@ These are the projects of my viewers who are following along (the ones I've foun
 - https://github.com/lgajowy/steve
 - https://github.com/lenguyenthanh/steve
 - https://github.com/miguel-vila/steve
+- https://github.com/kmarreroe86/stevedore
+- https://github.com/rmedjek/steve
+- https://github.com/jhz7/steve
 
 ## [Episode 1](https://www.youtube.com/watch?v=EIE-6gx_qi0)
 
