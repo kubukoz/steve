@@ -52,7 +52,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 ## Episode 7
 
 - Add tests for Registry/Resolver
-- Stateless hash calculation?
+- Stateless hash calculation
 
 ## Episode ???
 
