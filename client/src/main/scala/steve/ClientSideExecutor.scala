@@ -42,6 +42,7 @@ object ClientSideExecutor {
       def build(build: Build): F[Hash] = run(protocol.build, build)
 
       def run(hash: Hash): F[SystemState] = run(protocol.run, hash)
+      val listImages: F[List[Hash]] = run(protocol.listImages, ())
     }
 
 }

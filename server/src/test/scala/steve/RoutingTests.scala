@@ -21,15 +21,7 @@ class RoutingTests extends CatsEffectSuite {
   )
 
   test("POST /api/run") {
-    val input =
-      io.circe
-        .parser
-        .parse("""
-    {
-      "value": [40, 100]
-    }
-    """).toOption
-        .get
+    val input = Json.fromString("2864")
 
     val output =
       io.circe

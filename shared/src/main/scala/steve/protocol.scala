@@ -5,8 +5,8 @@ import io.circe.Codec as CirceCodec
 import sttp.model.StatusCode
 
 object protocol {
-  import sttp.tapir._
-  import sttp.tapir.json.circe._
+  import sttp.tapir.*
+  import sttp.tapir.json.circe.*
 
   private val base = infallibleEndpoint.in("api")
 
@@ -22,5 +22,10 @@ object protocol {
     .in("run")
     .in(jsonBody[Hash])
     .out(jsonBody[SystemState])
+
+  val listImages: PublicEndpoint[Unit, Nothing, List[Hash], Any] = base
+    .get
+    .in("images")
+    .out(jsonBody[List[Hash]])
 
 }
