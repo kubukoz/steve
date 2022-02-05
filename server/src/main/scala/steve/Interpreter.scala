@@ -16,8 +16,8 @@ object Interpreter {
     new Interpreter[F] {
 
       private val transition: ResolvedBuild.Command => State[SystemState, Unit] = {
-        case ResolvedBuild.Command.Upsert(k, v) => State.modify(_.focus(_.all).modify(_ + (k -> v)))
-        case ResolvedBuild.Command.Delete(k)    => State.modify(_.focus(_.all).modify(_ - k))
+        case ResolvedBuild.Command.Upsert(k, v) => State.modify(_.upsert(k, v))
+        case ResolvedBuild.Command.Delete(k)    => State.modify(_.delete(k))
       }
 
       def interpret(build: ResolvedBuild): F[SystemState] = build

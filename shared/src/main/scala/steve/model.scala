@@ -58,7 +58,10 @@ object Hash {
   // todo custom codec
 }
 
-final case class SystemState(all: Map[String, String]) derives Codec.AsObject, Schema
+final case class SystemState(all: Map[String, String]) derives Codec.AsObject, Schema {
+  def upsert(key: String, value: String): SystemState = SystemState(all + (key -> value))
+  def delete(key: String): SystemState = SystemState(all - key)
+}
 
 object SystemState {
   given Show[SystemState] = Show.fromToString
