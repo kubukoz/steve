@@ -6,70 +6,56 @@ import Arbitraries.given
 import cats.effect.IO
 import steve.Build.Base
 import steve.Build.Error.UnknownBase
+import cats.effect.kernel.Resource
+import cats.Applicative
+import cats.effect.implicits.*
 
 object ResolverTests extends SimpleIOSuite with Checkers {
 
-  given Hasher[F] = Hasher.sha256Hasher[F]
+  given Hasher[IO] = Hasher.sha256Hasher[IO]
+
+  val unit = Applicative[IO].unit
 
   test("resolve(any build basing on the empty image)") {
     forall {
       (
-        emptyHash: Hash,
-        emptySystem: SystemState,
         commands: List[Build.Command],
       ) =>
-        Registry.inMemory[IO](Map(Registry.emptyHash -> emptySystem)).use { registry =>
-
-          given Registry[IO] = registry
-
-          Resolver
-            .instance[IO]
-            .resolve(Build(Base.EmptyImage, commands))
-            .map { resolved =>
-              val newBase = resolved.base
-
-              assert(newBase == emptySystem)
-            }
-        }
+        for {
+          given Registry[IO] <- Registry.inMemory[IO]
+          build = Build(Base.EmptyImage, commands)
+          resolved <- Resolver.instance[IO].resolve(build)
+          newBase = resolved.base
+        } yield assert(newBase == SystemState.empty)
     }
   }
 
   test("registry.save(system) >>= resolve == system") {
     forall { (system: SystemState, commands: List[Build.Command]) =>
-      Registry.inMemory[IO](Map.empty).use { registry =>
-        given Registry[IO] = registry
-        val resolver = Resolver.instance[IO]
+      for {
+        given Registry[IO] <- Registry.inMemory[IO]
+        _ <- unit
+        resolver = Resolver.instance[IO]
 
-        registry.save(system).flatMap { baseHash =>
-          val build = Build(Base.ImageReference(baseHash), commands)
+        baseHash <- Registry[IO].save(system)
+        build = Build(Base.ImageReference(baseHash), commands)
+        resolved <- resolver.resolve(build)
 
-          resolver
-            .resolve(build)
-            .map { resolved =>
-              val newBase = resolved.base
-
-              assert(newBase == system)
-            }
-        }
-      }
+        newBase = resolved.base
+      } yield assert(newBase == system)
     }
   }
 
   test("resolve(unknown hash) fails") {
     forall { (system: SystemState, commands: List[Build.Command], hash: Hash) =>
-      Registry.inMemory[IO](Map.empty).use { registry =>
-        given Registry[IO] = registry
-        val resolver = Resolver.instance[IO]
+      for {
+        given Registry[IO] <- Registry.inMemory[IO]
+        _ <- unit
+        resolver = Resolver.instance[IO]
 
-        val build = Build(Base.ImageReference(hash), commands)
-
-        resolver
-          .resolve(build)
-          .attempt
-          .map { resolved =>
-            assert(resolved == Left(UnknownBase(hash)))
-          }
-      }
+        build = Build(Base.ImageReference(hash), commands)
+        resolved <- resolver.resolve(build).attempt
+      } yield assert(resolved == Left(UnknownBase(hash)))
     }
   }
 }

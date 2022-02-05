@@ -14,12 +14,12 @@ import cats.implicits.*
 
 object RegistryTests extends SimpleIOSuite with Checkers {
 
-  given Hasher[F] = Hasher.sha256Hasher[F]
+  given Hasher[IO] = Hasher.sha256Hasher[IO]
   val registryR = Registry.instance[IO]
 
   test("save + lookup returns the same system") {
     forall { (system: SystemState) =>
-      registryR.use { registry =>
+      registryR.flatMap { registry =>
         for {
           hash <- registry.save(system)
           result <- registry.lookup(hash)
@@ -30,7 +30,7 @@ object RegistryTests extends SimpleIOSuite with Checkers {
 
   test("save is not affected by other writes") {
     forall { (system: SystemState, otherSystems: List[SystemState]) =>
-      registryR.use { registry =>
+      registryR.flatMap { registry =>
         for {
           hash <- registry.save(system)
           _ <- otherSystems.traverse_(registry.save)
@@ -47,7 +47,7 @@ object RegistryTests extends SimpleIOSuite with Checkers {
         moreSystems: List[SystemState],
         hash: Hash,
       ) =>
-        registryR.use { registry =>
+        registryR.flatMap { registry =>
           for {
             _ <- systems.traverse_(registry.save)
             result1 <- registry.lookup(hash)

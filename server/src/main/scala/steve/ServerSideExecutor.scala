@@ -43,7 +43,7 @@ object ServerSideExecutor {
     given Hasher[F] = Hasher.sha256Hasher[F]
 
     for {
-      given Registry[F] <- Registry.instance[F]
+      given Registry[F] <- Registry.instance[F].toResource
       _ <- unit
       given Resolver[F] = Resolver.instance[F]
     } yield instance[F]

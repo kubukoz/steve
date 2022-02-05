@@ -60,6 +60,8 @@ final case class SystemState(all: Map[String, String]) derives Codec.AsObject, S
 
 object SystemState {
   given Show[SystemState] = Show.fromToString
+
+  val empty: SystemState = SystemState(Map.empty)
 }
 
 final case class GenericServerError(message: String) extends Exception
