@@ -7,18 +7,10 @@ import org.scalacheck.Prop.forAll
 import org.scalacheck.Gen
 import org.scalacheck.Arbitrary
 import ResolvedBuild.Command.*
+import Arbitraries.given
 
 class InterpreterTests extends ScalaCheckSuite {
   val interpreter = Interpreter.instance[Id]
-
-  given Arbitrary[SystemState] = Arbitrary(Gen.resultOf(SystemState.apply))
-
-  given Arbitrary[ResolvedBuild.Command] = Arbitrary {
-    Gen.oneOf(
-      Gen.resultOf(ResolvedBuild.Command.Upsert.apply),
-      Gen.resultOf(ResolvedBuild.Command.Delete.apply),
-    )
-  }
 
   property("any system + upsert => the key in the system has the given value") {
     forAll { (system: SystemState, key: String, value: String) =>
