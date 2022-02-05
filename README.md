@@ -53,9 +53,11 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Add tests for Registry/Resolver
 - Stateless hash calculation
+- Client method for listing images in the registry
+- Tests for hashing
+- New format of hashes
 
 ## Episode ???
 
 - Migration to Weaver
-- Client methods for viewing the registry?
 - Logging unification

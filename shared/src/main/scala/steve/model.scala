@@ -3,6 +3,8 @@ package steve
 import io.circe.Codec
 import sttp.tapir.Schema
 import cats.Show
+import io.circe.Decoder
+import io.circe.syntax.*
 
 sealed trait Command extends Product with Serializable
 
@@ -47,13 +49,28 @@ object Build {
 
 }
 
-final case class Hash(value: Vector[Byte]) derives Codec.AsObject, Schema {
+// todo customize schema
+final case class Hash(value: Vector[Byte]) derives Schema {
   def toHex: String = value.map("%02X".format(_)).mkString.toLowerCase
 
   override def toString: String = toHex
 }
 
 object Hash {
+
+  def parse(s: String): Either[String, Hash] =
+    if (s.length % 2 == 0) {
+      val bytes = s.grouped(2).map(Integer.parseInt(_, 16).toByte).toVector
+      Right(Hash(bytes))
+    } else {
+      Left(s"Invalid hash: $s")
+    }
+
+  given Codec[Hash] = Codec.from(
+    Decoder[String].emap(parse),
+    _.toHex.asJson,
+  )
+
   given Show[Hash] = Show.fromToString
   // todo custom codec
 }
