@@ -45,7 +45,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Implement basic interpreter for build commands
 
-## Episode 6
+## [Episode 6](https://www.youtube.com/watch?v=4AsH2k1MRjs)
 
 - Initialize Registry, Resolver
 
