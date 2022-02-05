@@ -23,4 +23,9 @@ object protocol {
     .in(jsonBody[Hash])
     .out(jsonBody[SystemState])
 
+  val listImages: PublicEndpoint[Unit, Nothing, List[Hash], Any] = base
+    .get
+    .in("images")
+    .out(jsonBody[List[Hash]])
+
 }

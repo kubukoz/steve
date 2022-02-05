@@ -20,6 +20,7 @@ object Routing {
     val endpoints: List[ServerEndpoint[Any, F]] = List(
       protocol.build.serverLogicRecoverErrors(exec.build),
       protocol.run.serverLogicSuccess(exec.run),
+      protocol.listImages.serverLogicSuccess(_ => exec.listImages),
     )
 
     Http4sServerInterpreter[F](

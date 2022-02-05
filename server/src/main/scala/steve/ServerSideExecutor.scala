@@ -34,6 +34,7 @@ object ServerSideExecutor {
         .lookup(hash)
         .flatMap(_.liftTo[F](UnknownHash(hash)))
 
+      val listImages: F[List[Hash]] = Registry[F].list
     }
 
   def module[F[_]: Sync]: Resource[F, Executor[F]] = {

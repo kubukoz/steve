@@ -90,4 +90,14 @@ class CompatTests extends CatsEffectSuite {
       GenericServerError("server failed").asLeft,
     )
   }
+
+  test("List images - success") {
+    assertIO(
+      client.listImages,
+      List(goodHash),
+    )
+  }
+
+  // todo List images - internal error
+
 }

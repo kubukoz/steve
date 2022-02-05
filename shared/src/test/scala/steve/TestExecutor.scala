@@ -12,6 +12,12 @@ object TestExecutor {
     new Executor[IO] {
       def build(build: Build): IO[Hash] = buildImpl(build).liftTo[IO]
       def run(hash: Hash): IO[SystemState] = runImpl(hash).liftTo[IO]
+
+      val listImages: IO[List[Hash]] = runImpl
+        .collect { case (hash, Right(state)) => hash }
+        .toList
+        .pure[IO]
+
     }
 
 }

@@ -9,6 +9,7 @@ sealed trait Command extends Product with Serializable
 object Command {
   final case class Build(build: steve.Build) extends Command
   final case class Run(hash: Hash) extends Command
+  final case class ListImages() extends Command
 }
 
 final case class Build(
@@ -54,6 +55,7 @@ final case class Hash(value: Vector[Byte]) derives Codec.AsObject, Schema {
 
 object Hash {
   given Show[Hash] = Show.fromToString
+  // todo custom codec
 }
 
 final case class SystemState(all: Map[String, String]) derives Codec.AsObject, Schema
