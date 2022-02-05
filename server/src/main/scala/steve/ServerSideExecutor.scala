@@ -9,6 +9,7 @@ import cats.effect.kernel.Resource
 import cats.effect.std.UUIDGen
 import cats.implicits.*
 import steve.Build.Error.UnknownHash
+import cats.effect.kernel.Sync
 
 object ServerSideExecutor {
 
@@ -35,10 +36,11 @@ object ServerSideExecutor {
 
     }
 
-  def module[F[_]: MonadThrow: Ref.Make: UUIDGen]: Resource[F, Executor[F]] = {
+  def module[F[_]: Sync]: Resource[F, Executor[F]] = {
     val unit = Applicative[F].unit.toResource
 
     given Interpreter[F] = Interpreter.instance[F]
+    given Hasher[F] = Hasher.sha256Hasher[F]
 
     for {
       given Registry[F] <- Registry.instance[F]

@@ -47,7 +47,7 @@ object Build {
 }
 
 final case class Hash(value: Vector[Byte]) derives Codec.AsObject, Schema {
-  def toHex: String = value.map("%02X".format(_)).mkString
+  def toHex: String = value.map("%02X".format(_)).mkString.toLowerCase
 
   override def toString: String = toHex
 }

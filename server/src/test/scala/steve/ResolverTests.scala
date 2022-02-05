@@ -9,6 +9,8 @@ import steve.Build.Error.UnknownBase
 
 object ResolverTests extends SimpleIOSuite with Checkers {
 
+  given Hasher[F] = Hasher.sha256Hasher[F]
+
   test("resolve(any build basing on the empty image)") {
     forall {
       (

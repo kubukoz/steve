@@ -14,6 +14,7 @@ import cats.implicits.*
 
 object RegistryTests extends SimpleIOSuite with Checkers {
 
+  given Hasher[F] = Hasher.sha256Hasher[F]
   val registryR = Registry.instance[IO]
 
   test("save + lookup returns the same system") {
