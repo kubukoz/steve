@@ -45,5 +45,5 @@ exec
     )
   )
   .unsafeRunSync()
-
+  .toHex
 exec.run(build2Hash).unsafeRunSync()

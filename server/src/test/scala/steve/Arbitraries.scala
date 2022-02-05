@@ -14,4 +14,8 @@ object Arbitraries {
     )
   }
 
+  given Arbitrary[Hash] = Arbitrary {
+    Gen.resultOf(Hash.apply)
+  }
+
 }

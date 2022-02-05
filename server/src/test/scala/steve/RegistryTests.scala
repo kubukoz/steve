@@ -2,26 +2,60 @@ package steve
 
 import cats.Id
 import cats.catsInstancesForId
-import munit.ScalaCheckSuite
 import org.scalacheck.Prop.forAll
 import org.scalacheck.Gen
 import org.scalacheck.Arbitrary
 import ResolvedBuild.Command.*
 import Arbitraries.given
 import cats.effect.IO
-import munit.CatsEffectSuite
+import weaver.*
+import weaver.scalacheck.Checkers
+import cats.implicits.*
 
-class RegistryTests extends CatsEffectSuite with ScalaCheckSuite {
+object RegistryTests extends SimpleIOSuite with Checkers {
 
-  // val registry = Registry.inMemory[IO]
+  val registryR = Registry.inMemory[IO]
 
-  // property("save + lookup returns the same system") {
-  //   forAll {
-  //     (
-  //       system: SystemState,
-  //     ) =>
-  //       assertIO(IO(true), false)
-  //   }
-  // }
+  test("save + lookup returns the same system") {
+    forall { (system: SystemState) =>
+      registryR.use { registry =>
+        for {
+          hash <- registry.save(system)
+          result <- registry.lookup(hash)
+        } yield assert(result.contains(system))
+      }
+    }
+  }
+
+  test("save is not affected by other writes") {
+    forall { (system: SystemState, otherSystems: List[SystemState]) =>
+      registryR.use { registry =>
+        for {
+          hash <- registry.save(system)
+          _ <- otherSystems.traverse_(registry.save)
+          hash2 <- registry.save(system)
+        } yield assert(hash == hash2)
+      }
+    }
+  }
+
+  test("lookup is idempotent") {
+    forall {
+      (
+        systems: List[SystemState],
+        moreSystems: List[SystemState],
+        hash: Hash,
+      ) =>
+        registryR.use { registry =>
+          for {
+            _ <- systems.traverse_(registry.save)
+            result1 <- registry.lookup(hash)
+
+            _ <- moreSystems.traverse_(registry.save)
+            result2 <- registry.lookup(hash)
+          } yield assert(result1 == result2)
+        }
+    }
+  }
 
 }
