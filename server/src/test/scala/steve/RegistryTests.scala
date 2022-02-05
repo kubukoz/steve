@@ -14,7 +14,7 @@ import cats.implicits.*
 
 object RegistryTests extends SimpleIOSuite with Checkers {
 
-  val registryR = Registry.inMemory[IO]
+  val registryR = Registry.instance[IO]
 
   test("save + lookup returns the same system") {
     forall { (system: SystemState) =>

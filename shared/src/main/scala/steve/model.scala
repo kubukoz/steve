@@ -31,6 +31,8 @@ object Build {
   object Command {
     final case class Upsert(key: String, value: String) extends Command
     final case class Delete(key: String) extends Command
+
+    given Show[Command] = Show.fromToString
   }
 
   val empty: Build = Build(Base.EmptyImage, Nil)
@@ -46,10 +48,12 @@ object Build {
 
 final case class Hash(value: Vector[Byte]) derives Codec.AsObject, Schema {
   def toHex: String = value.map("%02X".format(_)).mkString
+
+  override def toString: String = toHex
 }
 
 object Hash {
-  given Show[Hash] = _.toHex
+  given Show[Hash] = Show.fromToString
 }
 
 final case class SystemState(all: Map[String, String]) derives Codec.AsObject, Schema

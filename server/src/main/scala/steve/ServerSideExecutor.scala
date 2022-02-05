@@ -41,7 +41,7 @@ object ServerSideExecutor {
     given Interpreter[F] = Interpreter.instance[F]
 
     for {
-      given Registry[F] <- Registry.inMemory[F]
+      given Registry[F] <- Registry.instance[F]
       _ <- unit
       given Resolver[F] = Resolver.instance[F]
     } yield instance[F]
