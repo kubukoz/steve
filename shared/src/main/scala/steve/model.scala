@@ -5,6 +5,7 @@ import sttp.tapir.Schema
 import cats.Show
 import io.circe.Decoder
 import io.circe.syntax.*
+import cats.MonadError
 
 enum Command {
   case Build(build: steve.Build)
@@ -71,6 +72,13 @@ object Hash {
 final case class SystemState(all: Map[String, String]) derives Codec.AsObject, Schema {
   def upsert(key: String, value: String): SystemState = SystemState(all + (key -> value))
   def delete(key: String): SystemState = SystemState(all - key)
+
+  def prettyPrint: String = all
+    .toList
+    .sortBy(_._1)
+    .map { case (key, value) => s"$key: $value" }
+    .mkString("\n")
+
 }
 
 object SystemState {
