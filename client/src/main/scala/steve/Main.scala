@@ -1,7 +1,7 @@
 package steve
 
+import cats.Applicative
 import cats.Functor
-import cats.MonadThrow
 import cats.effect.ExitCode
 import cats.effect.IO
 import cats.effect.Resource
@@ -9,7 +9,7 @@ import cats.effect.kernel.Async
 import cats.implicits.*
 import com.monovore.decline.Opts
 import com.monovore.decline.effect.CommandIOApp
-import fs2.io.file.Files
+import fs2.io.file.Path
 import org.http4s.ember.client.EmberClientBuilder
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import steve.FrontEnd.CLICommand
@@ -28,16 +28,12 @@ object Main extends CommandIOApp("steve", "Command line interface for Steve") {
       ClientSideExecutor.instance[F](client)
     }
 
-  def convertCommand[F[_]: Files: MonadThrow](
-    using fs2.Compiler[F, F]
-  ): CLICommand => F[Command] = {
+  def convertCommand[F[_]: BuildReader: Applicative]: CLICommand => F[Command] = {
     case CLICommand.Build(ctx) =>
-      Files[F]
-        .readAll(fs2.io.file.Path.fromNioPath(ctx) / "steve.json")
-        .through(fs2.text.utf8.decode[F])
-        .compile
-        .string
-        .flatMap(io.circe.parser.decode[Build](_).liftTo[F])
+      BuildReader[F]
+        .read(
+          Path.fromNioPath(ctx) / "steve.json"
+        )
         .map(Command.Build(_))
     case CLICommand.Run(hash) => Command.Run(hash).pure[F]
     case CLICommand.List      => Command.ListImages.pure[F]
@@ -59,6 +55,8 @@ object Main extends CommandIOApp("steve", "Command line interface for Steve") {
         images.mkString("\n")
       }
   }
+
+  given BuildReader[IO] = BuildReader.instance
 
   val main: Opts[IO[ExitCode]] = FrontEnd.parseInput.map {
     convertCommand[IO](_)
