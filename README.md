@@ -60,8 +60,8 @@ These are the projects of my viewers who are following along (the ones I've foun
 ## Episode 8
 
 - Building client front-end
-- Migration to Weaver
 
 ## Episode ???
 
+- Migration to Weaver
 - Logging unification
