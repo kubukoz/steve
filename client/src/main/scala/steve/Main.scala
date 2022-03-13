@@ -18,38 +18,44 @@ import java.nio.file.Path
 
 object Main extends CommandIOApp("steve", "Command line interface for Steve") {
 
-  val input: Opts[IO[Command]] = {
+  enum CLICommand {
+    case Build(context: Path)
+    case Run(hash: Hash)
+    case List
+  }
+
+  val input: Opts[CLICommand] = {
     val build = Opts
       .subcommand("build", "Build an image")(
         Opts.argument[Path]("path")
       )
-      .map { p =>
-        Files[IO]
-          .readAll(fs2.io.file.Path.fromNioPath(p) / "steve.json")
-          .through(fs2.text.utf8.decode[IO])
-          .compile
-          .string
-          .flatMap(io.circe.parser.decode[Build](_).liftTo[IO])
-          .map(Command.Build(_))
-      }
+      .map(CLICommand.Build(_))
 
     val run =
       Opts
         .subcommand("run", "Run built image")(
           Opts
             .argument[String]("hash")
-            .map(
-              Hash
-                .parse(_)
-                .leftMap(new Exception(_))
-                .liftTo[IO]
-                .map(Command.Run(_))
-            )
+            .mapValidated(Hash.parse(_).toValidatedNel)
+            .map(CLICommand.Run(_))
         )
 
-    val list = Opts.subcommand("list", "List known images")(Opts(IO.pure(Command.ListImages)))
+    val list = Opts.subcommand("list", "List known images")(Opts(CLICommand.List))
 
     build <+> run <+> list
+  }
+
+  val convertCommand: CLICommand => IO[Command] = {
+    case CLICommand.Build(ctx) =>
+      Files[IO]
+        .readAll(fs2.io.file.Path.fromNioPath(ctx) / "steve.json")
+        .through(fs2.text.utf8.decode[IO])
+        .compile
+        .string
+        .flatMap(io.circe.parser.decode[Build](_).liftTo[IO])
+        .map(Command.Build(_))
+    case CLICommand.Run(hash) => Command.Run(hash).pure[IO]
+    case CLICommand.List      => Command.ListImages.pure[IO]
   }
 
   val logger = Slf4jLogger.getLogger[IO]
@@ -80,10 +86,13 @@ object Main extends CommandIOApp("steve", "Command line interface for Steve") {
       }
   }
 
-  def main: Opts[IO[ExitCode]] = input.map {
-    _.flatMap { cmd =>
-      exec.use(eval(_)(cmd)).flatMap(IO.println(_))
-    }.as(ExitCode.Success)
+  val main: Opts[IO[ExitCode]] = input.map {
+    convertCommand(_)
+      .flatMap { cmd =>
+        exec.use(eval(_)(cmd))
+      }
+      .flatMap(IO.println(_))
+      .as(ExitCode.Success)
   }
 
 }
