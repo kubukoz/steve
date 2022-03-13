@@ -3,6 +3,7 @@ package steve
 import cats.implicits.*
 import com.monovore.decline.Opts
 import java.nio.file.Path
+import cats.kernel.Eq
 
 object FrontEnd {
 
@@ -10,6 +11,10 @@ object FrontEnd {
     case Build(context: Path)
     case Run(hash: Hash)
     case List
+  }
+
+  object CLICommand {
+    given Eq[CLICommand] = Eq.fromUniversalEquals
   }
 
   val parseInput: Opts[CLICommand] = {
