@@ -49,7 +49,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Initialize Registry, Resolver
 
-## Episode 7
+## [Episode 7](https://www.youtube.com/watch?v=hyk245P6C3Q)
 
 - Add tests for Registry/Resolver
 - Stateless hash calculation
