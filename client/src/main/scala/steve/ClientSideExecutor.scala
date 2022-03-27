@@ -22,7 +22,7 @@ object ClientSideExecutor {
         input: I,
       ): F[O] = {
         val (req, handler) = summon[Http4sClientInterpreter[F]]
-          .toRequestUnsafe(endpoint, Some(uri"http://localhost:8080"))
+          .toRequestThrowDecodeFailures(endpoint, Some(uri"http://localhost:8080"))
           .apply(input)
 
         client
