@@ -1,7 +1,7 @@
 val Versions =
   new {
     val tapir = "0.20.1"
-    val http4s = "0.23.10"
+    val http4s = "0.23.11"
     val logback = "1.2.11"
   }
 
@@ -16,7 +16,7 @@ val commonSettings: Seq[Setting[_]] = Seq(
   scalacOptions -= "-Xfatal-warnings",
   scalacOptions += "-source:future",
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-effect" % "3.3.7",
+    "org.typelevel" %% "cats-effect" % "3.3.9",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "org.typelevel" %% "munit-cats-effect-3" % "1.0.7" % Test,
     "com.disneystreaming" %% "weaver-cats" % "0.7.11" % Test,
@@ -73,6 +73,7 @@ val client = project
       "org.http4s" %% "http4s-ember-client" % Versions.http4s,
       "com.softwaremill.sttp.tapir" %% "tapir-http4s-client" % Versions.tapir,
       "ch.qos.logback" % "logback-classic" % Versions.logback,
+      "com.monovore" %% "decline-effect" % "2.2.0",
     ),
     nativeImageSettings,
   )

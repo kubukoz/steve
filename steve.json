@@ -1,0 +1,13 @@
+{
+  "base": {
+    "EmptyImage": {}
+  },
+  "commands": [
+    {
+      "Upsert": {
+        "key": "hello",
+        "value": "world"
+      }
+    }
+  ]
+}

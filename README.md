@@ -49,7 +49,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Initialize Registry, Resolver
 
-## Episode 7
+## [Episode 7](https://www.youtube.com/watch?v=hyk245P6C3Q)
 
 - Add tests for Registry/Resolver
 - Stateless hash calculation
@@ -57,11 +57,16 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Tests for hashing
 - New format of hashes
 
-## Episode 8
+## [Episode 8](https://www.youtube.com/watch?v=4y-zvp8TKYU)
 
 - Building client front-end
-- Migration to Weaver
 
 ## Episode ???
 
+- Pretty, streamed output
+- Custom build file format
+- Tagging images
+- Actual E2E tests
+- More commands
+- Migration to Weaver
 - Logging unification
