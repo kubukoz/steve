@@ -1,7 +1,8 @@
-package steve
+package steve.server
 
 import weaver.*
 import cats.effect.IO
+import steve.SystemState
 
 object HasherTests extends SimpleIOSuite {
 

@@ -1,4 +1,4 @@
-package steve
+package steve.server
 
 import weaver.*
 import weaver.scalacheck.Checkers
@@ -9,6 +9,9 @@ import steve.Build.Error.UnknownBase
 import cats.effect.kernel.Resource
 import cats.Applicative
 import cats.effect.implicits.*
+import steve.Build
+import steve.SystemState
+import steve.Hash
 
 object ResolverTests extends SimpleIOSuite with Checkers {
 

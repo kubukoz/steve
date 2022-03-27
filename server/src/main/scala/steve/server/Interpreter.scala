@@ -1,9 +1,10 @@
-package steve
+package steve.server
 
 import cats.implicits.*
 import cats.Applicative
 import cats.data.State
 import monocle.syntax.all.*
+import steve.SystemState
 
 trait Interpreter[F[_]] {
   def interpret(build: ResolvedBuild): F[SystemState]

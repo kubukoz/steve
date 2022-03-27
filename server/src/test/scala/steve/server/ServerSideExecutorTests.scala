@@ -1,9 +1,10 @@
-package steve
+package steve.server
 
 import munit.CatsEffectSuite
 import cats.Id
 import cats.effect.SyncIO
 import cats.effect.IO
+import steve.Build
 
 class ServerSideExecutorTests extends CatsEffectSuite {
 

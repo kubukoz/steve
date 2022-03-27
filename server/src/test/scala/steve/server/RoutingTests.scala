@@ -1,4 +1,4 @@
-package steve
+package steve.server
 
 import munit.CatsEffectSuite
 import org.http4s.circe.CirceEntityCodec.*
@@ -8,6 +8,9 @@ import org.http4s.client.Client
 import org.http4s.Method.*
 import org.http4s.implicits.*
 import io.circe.Json
+import steve.TestExecutor
+import steve.Hash
+import steve.SystemState
 
 class RoutingTests extends CatsEffectSuite {
 

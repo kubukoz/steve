@@ -1,4 +1,4 @@
-package steve
+package steve.server
 
 import cats.Applicative
 import cats.ApplicativeThrow
@@ -10,6 +10,10 @@ import cats.effect.std.UUIDGen
 import cats.implicits.*
 import steve.Build.Error.UnknownHash
 import cats.effect.kernel.Sync
+import steve.Build
+import steve.Executor
+import steve.Hash
+import steve.SystemState
 
 object ServerSideExecutor {
 

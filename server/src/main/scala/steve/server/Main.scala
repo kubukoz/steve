@@ -1,4 +1,4 @@
-package steve
+package steve.server
 
 import cats.effect.IO
 import cats.effect.IOApp

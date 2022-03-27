@@ -1,4 +1,4 @@
-package steve
+package steve.client
 
 import cats.Applicative
 import cats.Functor
@@ -12,8 +12,10 @@ import com.monovore.decline.effect.CommandIOApp
 import fs2.io.file.Path
 import org.http4s.ember.client.EmberClientBuilder
 import org.typelevel.log4cats.slf4j.Slf4jLogger
-import steve.FrontEnd.CLICommand
+import steve.client.FrontEnd.CLICommand
 import sttp.tapir.client.http4s.Http4sClientInterpreter
+import steve.Command
+import steve.Executor
 
 object Main extends CommandIOApp("steve", "Command line interface for Steve") {
 
