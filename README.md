@@ -57,7 +57,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Tests for hashing
 - New format of hashes
 
-## Episode 8
+## [Episode 8](https://www.youtube.com/watch?v=4y-zvp8TKYU)
 
 - Building client front-end
 
