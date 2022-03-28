@@ -1,9 +1,10 @@
-package steve
+package steve.client
 
 import cats.implicits.*
 import com.monovore.decline.Opts
 import java.nio.file.Path
 import cats.kernel.Eq
+import steve.Hash
 
 object FrontEnd {
 

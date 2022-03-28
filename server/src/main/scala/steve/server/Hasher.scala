@@ -1,9 +1,11 @@
-package steve
+package steve.server
 
 import cats.effect.kernel.Sync
 import cats.implicits.*
 import java.security.MessageDigest
 import cats.Functor
+import steve.SystemState
+import steve.Hash
 
 trait Hasher[F[_]] {
   def hash(system: SystemState): F[Hash]

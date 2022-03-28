@@ -1,7 +1,10 @@
-package steve
+package steve.server
 
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
+import steve.SystemState
+import steve.Build
+import steve.Hash
 
 object Arbitraries {
 

@@ -1,9 +1,11 @@
-package steve
+package steve.server
 
 import cats.MonadThrow
 import cats.effect.implicits.*
 import cats.implicits.*
 import steve.Build.Error.UnknownBase
+import steve.Build
+import steve.SystemState
 
 trait Resolver[F[_]] {
   def resolve(build: Build): F[ResolvedBuild]

@@ -1,4 +1,4 @@
-package steve
+package steve.server
 
 import cats.Id
 import cats.catsInstancesForId
@@ -11,6 +11,8 @@ import cats.effect.IO
 import weaver.*
 import weaver.scalacheck.Checkers
 import cats.implicits.*
+import steve.Hash
+import steve.SystemState
 
 object RegistryTests extends SimpleIOSuite with Checkers {
 

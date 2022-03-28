@@ -1,9 +1,10 @@
-package steve
+package steve.client
 
 import fs2.io.file.Path
 import fs2.io.file.Files
 import cats.implicits.*
 import cats.MonadThrow
+import steve.Build
 
 trait BuildReader[F[_]] {
   def read(buildFile: Path): F[Build]

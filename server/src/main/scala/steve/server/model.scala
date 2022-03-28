@@ -1,4 +1,6 @@
-package steve
+package steve.server
+
+import steve.SystemState
 
 final case class ResolvedBuild(
   base: SystemState,
