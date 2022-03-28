@@ -14,6 +14,7 @@ import steve.Build
 import steve.Executor
 import steve.Hash
 import steve.SystemState
+import steve.OutputEvent
 
 object ServerSideExecutor {
 
@@ -25,12 +26,28 @@ object ServerSideExecutor {
       //
       // build(x).flatMap(run).isSuccess
       // build(x) <-> build(x)
-      def build(
-        build: Build
-      ): F[Hash] = Resolver[F]
-        .resolve(build)
-        .flatMap(Interpreter[F].interpret)
-        .flatMap(Registry[F].save)
+      // def build(
+      //   build: Build
+      // ): F[Hash] =
+      // Resolver[F]
+      //   .resolve(build)
+      //   .flatMap(Interpreter[F].interpret)
+      //   .flatMap(Registry[F].save)
+      def build(build: Build): fs2.Stream[F, OutputEvent[Hash]] =
+        // todo: output actual events
+        fs2
+          .Stream(
+            "hello world",
+            "goodbye world",
+          )
+          .map(OutputEvent.LogMessage(_))
+          ++ fs2.Stream.eval {
+            Resolver[F]
+              .resolve(build)
+              .flatMap(Interpreter[F].interpret)
+              .flatMap(Registry[F].save)
+              .map(OutputEvent.Result(_))
+          }
 
       def run(
         hash: Hash

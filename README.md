@@ -61,9 +61,12 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Building client front-end
 
-## Episode ???
+## Episode 9
 
 - Pretty, streamed output
+
+## Episode ???
+
 - Custom build file format
 - Tagging images
 - Actual E2E tests

@@ -17,6 +17,7 @@ val commonSettings: Seq[Setting[_]] = Seq(
   scalacOptions += "-source:future",
   libraryDependencies ++= Seq(
     "org.typelevel" %% "cats-effect" % "3.3.9",
+    "co.fs2" %% "fs2-core" % "3.2.5",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "org.typelevel" %% "munit-cats-effect-3" % "1.0.7" % Test,
     "com.disneystreaming" %% "weaver-cats" % "0.7.11" % Test,
@@ -43,6 +44,8 @@ val nativeImageSettings: Seq[Setting[_]] = Seq(
 val shared = project.settings(
   commonSettings,
   libraryDependencies ++= Seq(
+    "com.softwaremill.sttp.client3" %% "fs2" % "3.5.1",
+    "io.circe" %% "circe-fs2" % "0.14.0",
     "com.softwaremill.sttp.tapir" %% "tapir-core" % Versions.tapir,
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.tapir,
   ),
@@ -78,7 +81,7 @@ val client = project
     nativeImageSettings,
   )
   .enablePlugins(NativeImagePlugin)
-  .dependsOn(full(shared))
+  .dependsOn(full(shared), server)
 
 val e2e = project
   .settings(commonSettings)

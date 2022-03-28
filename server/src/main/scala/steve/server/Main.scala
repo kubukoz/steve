@@ -13,19 +13,19 @@ import org.http4s.HttpApp
 
 object Main extends IOApp.Simple {
 
-  def run: IO[Unit] =
-    ServerSideExecutor
-      .module[IO]
-      .flatMap { exec =>
-        EmberServerBuilder
-          .default[IO]
-          .withHost(host"0.0.0.0")
-          .withPort(port"8080")
-          .withHttpApp {
-            Routing.instance[IO](exec)
-          }
-          .build
-      }
-      .useForever
+  val serve = ServerSideExecutor
+    .module[IO]
+    .flatMap { exec =>
+      EmberServerBuilder
+        .default[IO]
+        .withHost(host"0.0.0.0")
+        .withPort(port"8080")
+        .withHttpApp {
+          Routing.instance[IO](exec)
+        }
+        .build
+    }
+
+  def run: IO[Unit] = serve.useForever
 
 }

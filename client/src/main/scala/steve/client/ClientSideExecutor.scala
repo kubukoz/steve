@@ -13,10 +13,13 @@ import steve.Build
 import steve.GenericServerError
 import steve.SystemState
 import steve.Hash
+import sttp.capabilities.fs2.Fs2Streams
+import steve.OutputEvent
+import cats.effect.kernel.Sync
 
 object ClientSideExecutor {
 
-  def instance[F[_]: Http4sClientInterpreter: MonadCancelThrow](
+  def instance[F[_]: Http4sClientInterpreter: Sync](
     client: Client[F]
   )(
     using fs2.Compiler[F, F]
@@ -24,7 +27,7 @@ object ClientSideExecutor {
     new Executor[F] {
 
       private def run[I, E <: Throwable, O](
-        endpoint: PublicEndpoint[I, E, O, Any],
+        endpoint: PublicEndpoint[I, E, O, Fs2Streams[F]],
         input: I,
       ): F[O] = {
         val (req, handler) = summon[Http4sClientInterpreter[F]]
@@ -45,7 +48,8 @@ object ClientSideExecutor {
           }
       }
 
-      def build(build: Build): F[Hash] = run(protocol.build, build)
+      def build(build: Build): fs2.Stream[F, OutputEvent[Hash]] =
+        fs2.Stream.eval(run(protocol.build, build)).flatten
 
       def run(hash: Hash): F[SystemState] = run(protocol.run, hash)
       val listImages: F[List[Hash]] = run(protocol.listImages, ())

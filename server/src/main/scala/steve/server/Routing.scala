@@ -16,12 +16,13 @@ import sttp.tapir.server.interceptor.exception.ExceptionHandler
 import steve.Executor
 import steve.protocol
 import steve.GenericServerError
+import sttp.capabilities.fs2.Fs2Streams
 
 object Routing {
 
   def instance[F[_]: Async](exec: Executor[F]): HttpApp[F] = {
-    val endpoints: List[ServerEndpoint[Any, F]] = List(
-      protocol.build.serverLogicRecoverErrors(exec.build),
+    val endpoints: List[ServerEndpoint[Fs2Streams[F], F]] = List(
+      protocol.build.serverLogicRecoverErrors(exec.build(_).pure[F]),
       protocol.run.serverLogicSuccess(exec.run),
       protocol.listImages.serverLogicSuccess(_ => exec.listImages),
     )
