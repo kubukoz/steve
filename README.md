@@ -63,11 +63,13 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 ## Episode 9
 
-- Pretty, streamed output
+- Support for streaming responses
 
 ## Episode ???
 
+- Pretty, streamed output
 - Custom build file format
+
 - Tagging images
 - Actual E2E tests
 - More commands
