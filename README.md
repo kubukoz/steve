@@ -61,7 +61,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Building client front-end
 
-## Episode 9
+## [Episode 9](https://www.youtube.com/watch?v=GNleUFwgzWc)
 
 - Support for streaming responses
 
