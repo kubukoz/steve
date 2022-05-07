@@ -23,34 +23,7 @@ object protocol {
     .put
     .in("build")
     .in(jsonBody[Build])
-    .out(
-      // todo: extract
-      streamBody(Fs2Streams[F])(
-        summon[Schema[List[OutputEvent[Either[Build.Error, Hash]]]]],
-        CodecFormat.Json(),
-      )
-        .map {
-          _.through(io.circe.fs2.byteArrayParser)
-            .through(io.circe.fs2.decoder[F, OutputEvent[Either[Build.Error, Hash]]])
-        } { events =>
-          fs2
-            .Stream
-            .emit("[")
-            .append(
-              events
-                .handleErrorWith { e =>
-                  fs2.Stream.exec(Logger[F].error(e)("Response stream error")) ++
-                    fs2
-                      .Stream
-                      .emit(OutputEvent.Failure(GenericServerError("Response stream error")))
-                }
-                .map(_.asJson.noSpaces)
-                .intersperse(",")
-            )
-            .append(fs2.Stream.emit("]"))
-            .through(fs2.text.utf8.encode)
-        }
-    )
+    .out(outputEventStream[F, Either[Build.Error, Hash]])
 
   val run: PublicEndpoint[Hash, RunError, SystemState, Any] = base
     .post
@@ -63,5 +36,32 @@ object protocol {
     .get
     .in("images")
     .out(jsonBody[List[Hash]])
+
+  private def outputEventStream[F[_]: Sync: Logger, A: CirceCodec: Schema] =
+    streamBody(Fs2Streams[F])(
+      summon[Schema[List[OutputEvent[A]]]],
+      CodecFormat.Json(),
+    )
+      .map {
+        _.through(io.circe.fs2.byteArrayParser)
+          .through(io.circe.fs2.decoder[F, OutputEvent[A]])
+      } { events =>
+        fs2
+          .Stream
+          .emit("[")
+          .append(
+            events
+              .handleErrorWith { e =>
+                fs2.Stream.exec(Logger[F].error(e)("Response stream error")) ++
+                  fs2
+                    .Stream
+                    .emit(OutputEvent.Failure(GenericServerError("Response stream error")))
+              }
+              .map(_.asJson.noSpaces)
+              .intersperse(",")
+          )
+          .append(fs2.Stream.emit("]"))
+          .through(fs2.text.utf8.encode)
+      }
 
 }

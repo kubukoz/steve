@@ -67,12 +67,17 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 ## [Episode 10](...)
 
-- Finish streaming responses support
-- Add messages to be streamed
-- Pretty, streamed output?
+- Error handling in streaming
+- Fixing stream safety (issue from episode 9)
+- Fixing tests after streaming changes
+- Minor refactoring in streaming
 
 ## Episode ???
 
+- Clean up streaming
+- (further) Extract logic from protocol
+- Add messages to be streamed
+- Pretty, streamed output?
 - Custom build file format
 
 - Tagging images
