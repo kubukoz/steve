@@ -81,6 +81,7 @@ val client = project
     nativeImageSettings,
   )
   .enablePlugins(NativeImagePlugin)
+  // todo: remove dependency on server
   .dependsOn(full(shared), server)
 
 val e2e = project
