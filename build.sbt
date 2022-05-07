@@ -5,7 +5,7 @@ val Versions =
     val logback = "1.2.11"
   }
 
-ThisBuild / scalaVersion := "3.1.1"
+ThisBuild / scalaVersion := "3.1.2"
 ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 
@@ -16,13 +16,13 @@ val commonSettings: Seq[Setting[_]] = Seq(
   scalacOptions -= "-Xfatal-warnings",
   scalacOptions += "-source:future",
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-effect" % "3.3.9",
+    "org.typelevel" %% "cats-effect" % "3.3.11",
     "co.fs2" %% "fs2-core" % "3.2.5",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "org.typelevel" %% "munit-cats-effect-3" % "1.0.7" % Test,
     "com.disneystreaming" %% "weaver-cats" % "0.7.11" % Test,
     "com.disneystreaming" %% "weaver-scalacheck" % "0.7.11" % Test,
-    compilerPlugin("org.polyvariant" % "better-tostring" % "0.3.14" cross CrossVersion.full),
+    compilerPlugin("org.polyvariant" % "better-tostring" % "0.3.15" cross CrossVersion.full),
   ),
   testFrameworks += new TestFramework("weaver.framework.CatsEffect"),
 )
