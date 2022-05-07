@@ -24,11 +24,9 @@ object ServerSideExecutorTests extends SimpleIOSuite {
         assert.eql(
           logs.map(_.map(_.map(_.toHex))),
           List(
-            OutputEvent.LogMessage("hello world"),
-            OutputEvent.LogMessage("goodbye world"),
             OutputEvent.Result(
               "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855".asRight
-            ),
+            )
           ),
         )
       }
