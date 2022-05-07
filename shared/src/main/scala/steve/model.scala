@@ -7,6 +7,7 @@ import io.circe.Decoder
 import io.circe.syntax.*
 import cats.MonadError
 import cats.kernel.Eq
+import io.circe.Encoder
 
 enum Command {
   case Build(build: steve.Build)
@@ -43,6 +44,20 @@ object Build {
     case UnknownHash(hash: Hash)
   }
 
+  object Error {
+    given Eq[Error] = Eq.fromUniversalEquals
+
+    given [A: Codec]: Codec[Either[Error, A]] = Codec.from(
+      Decoder.decodeEither("error", "success"),
+      Encoder.encodeEither("error", "success"),
+    )
+
+  }
+
+}
+
+enum RunError extends Exception derives Codec.AsObject, Schema {
+  case UnknownHash(hash: Hash)
 }
 
 // todo customize schema
@@ -86,6 +101,7 @@ final case class SystemState(all: Map[String, String]) derives Codec.AsObject, S
 
 object SystemState {
   given Show[SystemState] = Show.fromToString
+  given Eq[SystemState] = Eq.fromUniversalEquals
 
   val empty: SystemState = SystemState(Map.empty)
 }
@@ -93,3 +109,7 @@ object SystemState {
 final case class GenericServerError(message: String) extends Exception
   derives Codec.AsObject,
     Schema
+
+object GenericServerError {
+  given Eq[GenericServerError] = Eq.fromUniversalEquals
+}

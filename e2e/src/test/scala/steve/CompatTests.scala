@@ -1,6 +1,6 @@
 package steve
 
-import munit.CatsEffectSuite
+import weaver.*
 import cats.effect.IO
 import sttp.tapir.client.http4s.Http4sClientInterpreter
 import org.http4s.client.Client
@@ -8,9 +8,13 @@ import cats.effect.kernel.Async
 import cats.implicits.*
 import steve.client.ClientSideExecutor
 import steve.server.Routing
+import org.typelevel.log4cats.Logger
+import org.typelevel.log4cats.noop.NoOpLogger
+import steve.TestExecutor.TestResult
 
-class CompatTests extends CatsEffectSuite {
+object CompatTests extends SimpleIOSuite {
 
+  given Logger[IO] = NoOpLogger[IO]
   given Http4sClientInterpreter[IO] = Http4sClientInterpreter[IO]()
 
   val goodBuild: Build = Build.empty
@@ -23,7 +27,7 @@ class CompatTests extends CatsEffectSuite {
     Nil,
   )
 
-  val unknownBaseError: Throwable = Build.Error.UnknownBase(unknownHash)
+  val unknownBaseError: Build.Error = Build.Error.UnknownBase(unknownHash)
 
   val unexpectedFailingBuild: Build = Build(
     Build.Base.EmptyImage,
@@ -34,15 +38,17 @@ class CompatTests extends CatsEffectSuite {
   val unexpectedFailingHash: Hash = Hash(Vector(42))
   val goodRunResult: SystemState = SystemState(Map.empty)
 
+  // todo :add logs
   val exec: Executor[IO] = TestExecutor.instance(
     Map(
-      goodBuild -> goodBuildResult.asRight,
-      unknownBaseBuild -> unknownBaseError.asLeft,
-      unexpectedFailingBuild -> new Throwable("build internal error").asLeft,
+      goodBuild -> TestResult.Success(goodBuildResult),
+      unknownBaseBuild -> TestResult.Failure(unknownBaseError),
+      unexpectedFailingBuild -> TestResult.Crash(new Throwable("build internal error")),
     ),
     Map(
-      goodHash -> goodRunResult.asRight,
-      unexpectedFailingHash -> new Throwable("run internal error").asLeft,
+      goodHash -> TestResult.Success(goodRunResult),
+      // todo: add case for Failure (RunError)
+      unexpectedFailingHash -> TestResult.Crash(new Throwable("run internal error")),
     ),
   )
 
@@ -56,48 +62,48 @@ class CompatTests extends CatsEffectSuite {
 
   test("Build image - success") {
 
-    assertIO(
-      client.build(goodBuild),
-      goodBuildResult,
-    )
+    client
+      .build(goodBuild)
+      .compile
+      .toList
+      .map(
+        assert.eql(_, List(OutputEvent.Result(goodBuildResult.asRight)))
+      )
   }
 
   test("Build image - unknown base error") {
-    assertIO(
-      client.build(unknownBaseBuild).attempt,
-      unknownBaseError.asLeft,
-    )
+    client
+      .build(unknownBaseBuild)
+      .compile
+      .toList
+      .map(result => assert.eql(result, List(OutputEvent.Result(unknownBaseError.asLeft))))
   }
 
   test("Build image - unexpected error") {
 
-    assertIO(
-      client.build(unexpectedFailingBuild).attempt,
-      GenericServerError("server failed").asLeft,
-    )
+    client
+      .build(unexpectedFailingBuild)
+      .compile
+      .toList
+      .map { result =>
+        assert.eql(result, List(OutputEvent.Failure(GenericServerError("Response stream error"))))
+      }
   }
 
   test("Run hash - success") {
-
-    assertIO(
-      client.run(goodHash),
-      goodRunResult,
-    )
+    client.run(goodHash).map(assert.eql(_, goodRunResult))
   }
 
   test("Run hash - unexpected error") {
 
-    assertIO(
-      client.run(unexpectedFailingHash).attempt,
-      GenericServerError("server failed").asLeft,
-    )
+    client
+      .run(unexpectedFailingHash)
+      .attempt
+      .map(result => assert(result == GenericServerError("server failed").asLeft))
   }
 
   test("List images - success") {
-    assertIO(
-      client.listImages,
-      List(goodHash),
-    )
+    client.listImages.map(assert.eql(_, List(goodHash)))
   }
 
   // todo List images - internal error

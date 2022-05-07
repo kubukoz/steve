@@ -22,12 +22,12 @@ object ServerSideExecutorTests extends SimpleIOSuite {
       .toList
       .map { logs =>
         assert.eql(
-          logs.map(_.map(_.toHex)),
+          logs.map(_.map(_.map(_.toHex))),
           List(
             OutputEvent.LogMessage("hello world"),
             OutputEvent.LogMessage("goodbye world"),
             OutputEvent.Result(
-              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855".asRight
             ),
           ),
         )
@@ -36,7 +36,7 @@ object ServerSideExecutorTests extends SimpleIOSuite {
 
   test("Build and run empty image") {
     execR
-      .use(exec => OutputEvent.getResult(exec.build(Build.empty)).flatMap(exec.run))
+      .use(exec => OutputEvent.getResult(exec.build(Build.empty)).rethrow.flatMap(exec.run))
       .map(_.all)
       .map(
         assert.eql(_, Map.empty)

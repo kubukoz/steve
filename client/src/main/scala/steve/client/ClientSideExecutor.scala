@@ -16,10 +16,12 @@ import steve.Hash
 import sttp.capabilities.fs2.Fs2Streams
 import steve.OutputEvent
 import cats.effect.kernel.Sync
+import cats.effect.kernel.Resource
+import org.typelevel.log4cats.Logger
 
 object ClientSideExecutor {
 
-  def instance[F[_]: Http4sClientInterpreter: Sync](
+  def instance[F[_]: Http4sClientInterpreter: Sync: Logger](
     client: Client[F]
   )(
     using fs2.Compiler[F, F]
@@ -29,14 +31,14 @@ object ClientSideExecutor {
       private def run[I, E <: Throwable, O](
         endpoint: PublicEndpoint[I, E, O, Fs2Streams[F]],
         input: I,
-      ): F[O] = {
+      ): Resource[F, O] = {
         val (req, handler) = summon[Http4sClientInterpreter[F]]
           .toRequestThrowDecodeFailures(endpoint, Some(uri"http://localhost:8080"))
           .apply(input)
 
         client
           .run(req)
-          .use {
+          .evalMap {
             case r if r.status == Status.InternalServerError =>
               r
                 .bodyText
@@ -48,11 +50,11 @@ object ClientSideExecutor {
           }
       }
 
-      def build(build: Build): fs2.Stream[F, OutputEvent[Hash]] =
-        fs2.Stream.eval(run(protocol.build, build)).flatten
+      def build(build: Build): fs2.Stream[F, OutputEvent[Either[Build.Error, Hash]]] =
+        fs2.Stream.resource(run(protocol.build, build)).flatten
 
-      def run(hash: Hash): F[SystemState] = run(protocol.run, hash)
-      val listImages: F[List[Hash]] = run(protocol.listImages, ())
+      def run(hash: Hash): F[SystemState] = run(protocol.run, hash).use(_.pure[F])
+      val listImages: F[List[Hash]] = run(protocol.listImages, ()).use(_.pure[F])
     }
 
 }

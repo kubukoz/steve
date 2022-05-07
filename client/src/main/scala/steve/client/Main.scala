@@ -11,19 +11,20 @@ import com.monovore.decline.Opts
 import com.monovore.decline.effect.CommandIOApp
 import fs2.io.file.Path
 import org.http4s.ember.client.EmberClientBuilder
-import org.typelevel.log4cats.slf4j.Slf4jLogger
 import steve.client.FrontEnd.CLICommand
 import sttp.tapir.client.http4s.Http4sClientInterpreter
 import steve.Command
 import steve.Executor
 import steve.OutputEvent
 import cats.MonadThrow
+import org.typelevel.log4cats.Logger
+import org.typelevel.log4cats.slf4j.Slf4jLogger
 
 object Main extends CommandIOApp("steve", "Command line interface for Steve") {
 
-  val logger = Slf4jLogger.getLogger[IO]
+  given Logger[IO] = Slf4jLogger.getLogger[IO]
 
-  def exec[F[_]: Async]: Resource[F, Executor[F]] = EmberClientBuilder
+  def exec[F[_]: Async: Logger]: Resource[F, Executor[F]] = EmberClientBuilder
     .default[F]
     .build
     .map { client =>
@@ -45,11 +46,12 @@ object Main extends CommandIOApp("steve", "Command line interface for Steve") {
 
   def eval[F[_]: MonadThrow](exec: Executor[F])(using fs2.Compiler[F, F]): Command => F[String] = {
     case Command.Build(build) =>
-      exec
-        .build(build)
-        .collect { case OutputEvent.Result(hash) => hash }
-        .compile
-        .lastOrError
+      // todo: pretty-print stream failures
+      // todo: pretty-print errors in stream
+      // todo: pretty-print messages in stream
+      OutputEvent
+        .getResult(exec.build(build))
+        .rethrow
         .map { hash =>
           hash.toHex
         }

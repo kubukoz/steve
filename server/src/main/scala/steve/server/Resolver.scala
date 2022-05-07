@@ -28,6 +28,7 @@ object Resolver {
           case Build.Base.ImageReference(hash) =>
             Registry[F]
               .lookup(hash)
+              // todo: this should have its own error hierarchy
               .flatMap(_.liftTo[F](UnknownBase(hash)))
         }
 

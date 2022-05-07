@@ -10,8 +10,12 @@ import org.http4s.implicits.*
 import sttp.tapir.server.ServerEndpoint
 import sttp.tapir.server.http4s.Http4sServerInterpreter
 import org.http4s.HttpApp
+import org.typelevel.log4cats.slf4j.Slf4jLogger
+import org.typelevel.log4cats.Logger
 
 object Main extends IOApp.Simple {
+
+  given Logger[IO] = Slf4jLogger.getLogger[IO]
 
   val serve = ServerSideExecutor
     .module[IO]

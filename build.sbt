@@ -46,6 +46,8 @@ val shared = project.settings(
   libraryDependencies ++= Seq(
     "com.softwaremill.sttp.client3" %% "fs2" % "3.5.1",
     "io.circe" %% "circe-fs2" % "0.14.0",
+    "org.typelevel" %% "log4cats-core" % "2.3.1",
+    "org.typelevel" %% "log4cats-noop" % "2.3.1",
     "com.softwaremill.sttp.tapir" %% "tapir-core" % Versions.tapir,
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.tapir,
   ),

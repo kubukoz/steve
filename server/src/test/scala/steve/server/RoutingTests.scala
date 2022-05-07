@@ -11,14 +11,19 @@ import io.circe.Json
 import steve.TestExecutor
 import steve.Hash
 import steve.SystemState
+import org.typelevel.log4cats.Logger
+import cats.effect.IO
+import org.typelevel.log4cats.noop.NoOpLogger
+import steve.TestExecutor.TestResult
 
 class RoutingTests extends CatsEffectSuite {
+  given Logger[IO] = NoOpLogger[IO]
 
   val exec = Client.fromHttpApp(
     Routing.instance(
       TestExecutor.instance(
         Map.empty,
-        Map(Hash(Vector(40, 100)) -> SystemState(Map("K" -> "V")).asRight),
+        Map(Hash(Vector(40, 100)) -> TestResult.Success(SystemState(Map("K" -> "V")))),
       )
     )
   )

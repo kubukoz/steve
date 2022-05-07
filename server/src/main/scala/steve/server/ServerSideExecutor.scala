@@ -15,6 +15,7 @@ import steve.Executor
 import steve.Hash
 import steve.SystemState
 import steve.OutputEvent
+import steve.RunError
 
 object ServerSideExecutor {
 
@@ -26,14 +27,7 @@ object ServerSideExecutor {
       //
       // build(x).flatMap(run).isSuccess
       // build(x) <-> build(x)
-      // def build(
-      //   build: Build
-      // ): F[Hash] =
-      // Resolver[F]
-      //   .resolve(build)
-      //   .flatMap(Interpreter[F].interpret)
-      //   .flatMap(Registry[F].save)
-      def build(build: Build): fs2.Stream[F, OutputEvent[Hash]] =
+      def build(build: Build): fs2.Stream[F, OutputEvent[Either[Build.Error, Hash]]] =
         // todo: output actual events
         fs2
           .Stream(
@@ -46,6 +40,7 @@ object ServerSideExecutor {
               .resolve(build)
               .flatMap(Interpreter[F].interpret)
               .flatMap(Registry[F].save)
+              .attemptNarrow[Build.Error]
               .map(OutputEvent.Result(_))
           }
 
@@ -53,7 +48,7 @@ object ServerSideExecutor {
         hash: Hash
       ): F[SystemState] = Registry[F]
         .lookup(hash)
-        .flatMap(_.liftTo[F](UnknownHash(hash)))
+        .flatMap(_.liftTo[F](RunError.UnknownHash(hash)))
 
       val listImages: F[List[Hash]] = Registry[F].list
     }
