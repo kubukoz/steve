@@ -6,6 +6,7 @@ import cats.Show
 import io.circe.Decoder
 import io.circe.syntax.*
 import cats.MonadError
+import cats.kernel.Eq
 
 enum Command {
   case Build(build: steve.Build)
@@ -67,6 +68,8 @@ object Hash {
   )
 
   given Show[Hash] = Show.fromToString
+
+  given Eq[Hash] = Eq.fromUniversalEquals
 }
 
 final case class SystemState(all: Map[String, String]) derives Codec.AsObject, Schema {
