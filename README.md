@@ -63,11 +63,16 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 ## [Episode 9](https://www.youtube.com/watch?v=GNleUFwgzWc)
 
-- Support for streaming responses
+- Initial support for streaming responses
+
+## [Episode 10](...)
+
+- Finish streaming responses support
+- Add messages to be streamed
+- Pretty, streamed output?
 
 ## Episode ???
 
-- Pretty, streamed output
 - Custom build file format
 
 - Tagging images
