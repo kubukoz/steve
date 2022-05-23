@@ -3,7 +3,6 @@ package steve.client
 import fs2.io.file.Path
 import fs2.io.file.Files
 import cats.implicits.*
-import cats.MonadThrow
 import cats.effect.Concurrent
 import steve.Build
 
