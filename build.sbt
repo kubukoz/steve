@@ -1,7 +1,7 @@
 val Versions =
   new {
     val tapir = "0.20.1"
-    val http4s = "0.23.11"
+    val http4s = "0.23.12"
     val logback = "1.2.11"
   }
 
