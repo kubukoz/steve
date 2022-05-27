@@ -5,6 +5,7 @@ import cats.Functor
 import cats.effect.ExitCode
 import cats.effect.IO
 import cats.effect.Resource
+import cats.effect.Concurrent
 import cats.effect.kernel.Async
 import cats.implicits.*
 import com.monovore.decline.Opts
@@ -16,7 +17,6 @@ import sttp.tapir.client.http4s.Http4sClientInterpreter
 import steve.Command
 import steve.Executor
 import steve.OutputEvent
-import cats.MonadThrow
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 
@@ -44,7 +44,7 @@ object Main extends CommandIOApp("steve", "Command line interface for Steve") {
     case CLICommand.List      => Command.ListImages.pure[F]
   }
 
-  def eval[F[_]: MonadThrow](exec: Executor[F])(using fs2.Compiler[F, F]): Command => F[String] = {
+  def eval[F[_]: Concurrent](exec: Executor[F]): Command => F[String] = {
     case Command.Build(build) =>
       // todo: pretty-print stream failures
       // todo: pretty-print errors in stream

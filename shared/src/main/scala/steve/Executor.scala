@@ -2,10 +2,10 @@ package steve
 
 import io.circe.Codec
 import sttp.tapir.Schema
-import cats.MonadThrow
 import cats.Eq
 import cats.implicits.*
 import cats.Functor
+import cats.effect.Concurrent
 
 //move to model
 enum OutputEvent[+A] derives Schema {
@@ -36,10 +36,8 @@ object OutputEvent {
 
     }
 
-  def getResult[F[_]: MonadThrow, A](
+  def getResult[F[_]: Concurrent, A](
     stream: fs2.Stream[F, OutputEvent[A]]
-  )(
-    using fs2.Compiler[F, F]
   ): F[A] =
     stream
       .collectFirst { case Result(a) => a }

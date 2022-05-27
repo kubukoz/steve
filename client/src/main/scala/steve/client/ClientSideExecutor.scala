@@ -23,8 +23,6 @@ object ClientSideExecutor {
 
   def instance[F[_]: Http4sClientInterpreter: Sync: Logger](
     client: Client[F]
-  )(
-    using fs2.Compiler[F, F]
   ): Executor[F] =
     new Executor[F] {
 
