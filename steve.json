@@ -8,6 +8,11 @@
         "key": "hello",
         "value": "world"
       }
+    },
+    {
+      "Delete": {
+        "key": "hello"
+      }
     }
   ]
 }

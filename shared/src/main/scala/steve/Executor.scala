@@ -53,6 +53,7 @@ object OutputEvent {
   def getResult[F[_]: Concurrent, A](
     stream: fs2.Stream[F, OutputEvent[A]]
   ): F[A] =
+    // todo: catch failures
     stream
       .collectFirst { case Result(a) => a }
       .compile

@@ -44,13 +44,20 @@ object Main extends CommandIOApp("steve", "Command line interface for Steve") {
     case CLICommand.List      => Command.ListImages.pure[F]
   }
 
-  def eval[F[_]: Concurrent](exec: Executor[F]): Command => F[String] = {
+  def eval[F[_]: Concurrent: cats.effect.std.Console](exec: Executor[F]): Command => F[String] = {
     case Command.Build(build) =>
       // todo: pretty-print stream failures
       // todo: pretty-print errors in stream
       // todo: pretty-print messages in stream
       OutputEvent
-        .getResult(exec.build(build))
+        .getResult {
+          exec
+            .build(build)
+            .evalTap {
+              case OutputEvent.LogMessage(msg) => cats.effect.std.Console[F].println("INFO: " + msg)
+              case _                           => Applicative[F].unit
+            }
+        }
         .rethrow
         .map { hash =>
           hash.toHex
