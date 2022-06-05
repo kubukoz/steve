@@ -27,23 +27,20 @@ object ServerSideExecutor {
       //
       // build(x).flatMap(run).isSuccess
       // build(x) <-> build(x)
-      def build(build: Build): fs2.Stream[F, OutputEvent[Either[Build.Error, Hash]]] =
-        // todo: output actual events
-        // fs2
-        //   .Stream(
-        //     "hello world",
-        //     "goodbye world",
-        //   )
-        //   .map(OutputEvent.LogMessage(_))
-        //   ++
-        fs2.Stream.eval {
+      def build(build: Build): fs2.Stream[F, OutputEvent[Either[Build.Error, Hash]]] = fs2
+        .Stream
+        .eval {
           Resolver[F]
             .resolve(build)
-            .flatMap(Interpreter[F].interpret)
-            .flatMap(Registry[F].save)
             .attemptNarrow[Build.Error]
-            .map(OutputEvent.Result(_))
         }
+        .flatMap { resolvedBuild =>
+          resolvedBuild match {
+            case Right(v) => Interpreter[F].interpret(v)
+            case Left(e)  => fs2.Stream.emit(OutputEvent.Result(Left(e)))
+          }
+        }
+        .evalMap(_.traverse(_.traverse(Registry[F].save)))
 
       def run(
         hash: Hash

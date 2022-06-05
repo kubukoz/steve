@@ -1,6 +1,7 @@
 package steve.server
 
 import steve.SystemState
+import cats.Show
 
 final case class ResolvedBuild(
   base: SystemState,
@@ -13,5 +14,7 @@ object ResolvedBuild {
     case Upsert(key: String, value: String)
     case Delete(key: String)
   }
+
+  given Show[Command] = Show.fromToString
 
 }

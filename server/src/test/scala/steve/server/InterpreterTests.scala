@@ -2,79 +2,91 @@ package steve.server
 
 import cats.Id
 import cats.catsInstancesForId
-import munit.ScalaCheckSuite
-import org.scalacheck.Prop.forAll
+import weaver.*
+import weaver.scalacheck.Checkers
 import org.scalacheck.Gen
 import org.scalacheck.Arbitrary
 import ResolvedBuild.Command.*
 import Arbitraries.given
 import steve.SystemState
+import cats.effect.IO
+import cats.implicits.*
+import steve.OutputEvent
 
-class InterpreterTests extends ScalaCheckSuite {
-  val interpreter = Interpreter.instance[Id]
+object InterpreterTests extends SimpleIOSuite with Checkers {
+  val interpreter = Interpreter.instance[IO]
 
-  property("any system + upsert => the key in the system has the given value") {
-    forAll { (system: SystemState, key: String, value: String) =>
+  private def interpretResult(build: ResolvedBuild) =
+    OutputEvent
+      .getResult(interpreter.interpret(build))
+      .rethrow
+
+  test("any system + upsert => the key in the system has the given value") {
+    forall { (system: SystemState, key: String, value: String) =>
       val build = ResolvedBuild(system, List(Upsert(key, value)))
 
-      assertEquals(
-        interpreter.interpret(build).all.get(key),
-        Some(value),
-      )
+      interpretResult(build)
+        .map { state =>
+          assert.eql(
+            state.all.get(key),
+            Some(value),
+          )
+
+        }
     }
   }
 
-  property("any system + delete => the key is missing") {
-    forAll { (system: SystemState, key: String) =>
+  test("any system + delete => the key is missing") {
+    forall { (system: SystemState, key: String) =>
       val build = ResolvedBuild(system, List(Delete(key)))
 
-      assertEquals(
-        interpreter.interpret(build).all.get(key),
-        None,
-      )
+      interpretResult(build)
+        .map { state =>
+          assert.eql(
+            state.all.get(key),
+            None,
+          )
+        }
     }
   }
 
-  property("upsert(k, v) + delete(k) == delete(k)") {
-    forAll { (system: SystemState, key: String, value: String) =>
+  test("upsert(k, v) + delete(k) == delete(k)") {
+    forall { (system: SystemState, key: String, value: String) =>
       val build = ResolvedBuild(system, List(Upsert(key, value), Delete(key)))
       val build2 = ResolvedBuild(system, List(Delete(key)))
 
-      assertEquals(
-        interpreter.interpret(build),
-        interpreter.interpret(build2),
-      )
+      (build, build2)
+        .bitraverse(interpretResult, interpretResult)
+        .map(assert.eql(_, _))
     }
   }
 
-  property("upsert(k, v1) + upsert(k, v2) == upsert(k, v2)") {
-    forAll { (system: SystemState, key: String, value1: String, value2: String) =>
+  test("upsert(k, v1) + upsert(k, v2) == upsert(k, v2)") {
+    forall { (system: SystemState, key: String, value1: String, value2: String) =>
       val build = ResolvedBuild(system, List(Upsert(key, value1), Upsert(key, value2)))
       val build2 = ResolvedBuild(system, List(Upsert(key, value2)))
 
-      assertEquals(
-        interpreter.interpret(build),
-        interpreter.interpret(build2),
-      )
+      (build, build2)
+        .bitraverse(interpretResult, interpretResult)
+        .map(assert.eql(_, _))
     }
   }
 
-  property("split build results in the same state as a combined build") {
-    forAll {
+  test("split build results in the same state as a combined build") {
+    forall {
       (
         system: SystemState,
         commands: List[ResolvedBuild.Command],
         moreCommands: List[ResolvedBuild.Command],
       ) =>
-        val lhs = {
-          val sys1 = interpreter.interpret(ResolvedBuild(system, commands))
-
-          interpreter.interpret(ResolvedBuild(sys1, moreCommands))
+        val lhs = interpretResult(ResolvedBuild(system, commands)).flatMap { sys1 =>
+          interpretResult(ResolvedBuild(sys1, moreCommands))
         }
 
-        val rhs = interpreter.interpret(ResolvedBuild(system, commands ++ moreCommands))
+        val rhs = interpretResult(ResolvedBuild(system, commands ++ moreCommands))
 
-        assertEquals(lhs, rhs)
+        (lhs, rhs)
+          .mapN(assert.eql(_, _))
     }
   }
 

@@ -5,9 +5,11 @@ import cats.Applicative
 import cats.data.State
 import monocle.syntax.all.*
 import steve.SystemState
+import steve.OutputEvent
+import steve.Build
 
 trait Interpreter[F[_]] {
-  def interpret(build: ResolvedBuild): F[SystemState]
+  def interpret(build: ResolvedBuild): fs2.Stream[F, OutputEvent[Either[Build.Error, SystemState]]]
 }
 
 object Interpreter {
@@ -21,12 +23,18 @@ object Interpreter {
         case ResolvedBuild.Command.Delete(k)    => State.modify(_.delete(k))
       }
 
-      def interpret(build: ResolvedBuild): F[SystemState] = build
-        .commands
-        .traverse(transition)
-        .runS(build.base)
-        .value
-        .pure[F]
+      def interpret(
+        build: ResolvedBuild
+      ): fs2.Stream[F, OutputEvent[Either[Build.Error, SystemState]]] = fs2.Stream.emit {
+        OutputEvent.Result {
+          build
+            .commands
+            .traverse(transition)
+            .runS(build.base)
+            .value
+            .asRight
+        }
+      }
 
     }
 
