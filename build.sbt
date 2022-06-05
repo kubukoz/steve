@@ -19,7 +19,6 @@ val commonSettings: Seq[Setting[_]] = Seq(
     "org.typelevel" %% "cats-effect" % "3.3.12",
     "co.fs2" %% "fs2-core" % "3.2.7",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
-    "org.typelevel" %% "munit-cats-effect-3" % "1.0.7" % Test,
     "com.disneystreaming" %% "weaver-cats" % "0.7.12" % Test,
     "com.disneystreaming" %% "weaver-scalacheck" % "0.7.12" % Test,
     "com.disneystreaming" %% "weaver-discipline" % "0.7.12" % Test,
@@ -68,7 +67,6 @@ val server = project
       "dev.optics" %% "monocle-core" % "3.1.0",
       "org.http4s" %% "http4s-circe" % Versions.http4s % Test,
       "org.http4s" %% "http4s-client" % Versions.http4s % Test,
-      "org.scalameta" %% "munit-scalacheck" % "0.7.29" % Test,
     ),
   )
   .dependsOn(full(shared))

@@ -1,6 +1,6 @@
 package steve.server
 
-import munit.CatsEffectSuite
+import weaver.*
 import org.http4s.circe.CirceEntityCodec.*
 import org.http4s.client.dsl.io.*
 import cats.implicits.*
@@ -16,7 +16,7 @@ import cats.effect.IO
 import org.typelevel.log4cats.noop.NoOpLogger
 import steve.TestExecutor.TestResult
 
-class RoutingTests extends CatsEffectSuite {
+object RoutingTests extends SimpleIOSuite {
   given Logger[IO] = NoOpLogger[IO]
 
   val exec = Client.fromHttpApp(
@@ -43,11 +43,12 @@ class RoutingTests extends CatsEffectSuite {
     """).toOption
         .get
 
-    assertIO(
-      exec.expect[Json](
+    exec
+      .expect[Json](
         POST(input, uri"/api/run")
-      ),
-      output,
-    )
+      )
+      .map {
+        assert.eql(_, output)
+      }
   }
 }

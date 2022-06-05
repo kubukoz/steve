@@ -72,6 +72,11 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Fixing tests after streaming changes
 - Minor refactoring in streaming
 
+## [Episode 11](...)
+
+- Prepare to do more streaming
+- Traverse instance for OutputEvent
+- Migration to Weaver
 
 ## Episode ???
 
@@ -84,5 +89,4 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Tagging images
 - Actual E2E tests
 - More commands
-- Migration to Weaver
 - Logging unification
