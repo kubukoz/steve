@@ -77,6 +77,12 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Prepare to do more streaming
 - Traverse instance for OutputEvent
 - Migration to Weaver
+- Show build messages in the client
+
+## [Episode 12](...)
+
+- Pretty output (colors, Unicode)
+- Custom build file format
 
 ## Episode ???
 
@@ -84,7 +90,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 - (further) Extract logic from protocol
 - Add messages to be streamed
 - Pretty, streamed output?
-- Custom build file format
+
 
 - Tagging images
 - Actual E2E tests
