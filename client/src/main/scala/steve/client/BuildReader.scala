@@ -3,7 +3,7 @@ package steve.client
 import fs2.io.file.Path
 import fs2.io.file.Files
 import cats.implicits.*
-import cats.MonadThrow
+import cats.effect.Concurrent
 import steve.Build
 
 trait BuildReader[F[_]] {
@@ -13,7 +13,7 @@ trait BuildReader[F[_]] {
 object BuildReader {
   def apply[F[_]](using F: BuildReader[F]): BuildReader[F] = F
 
-  def instance[F[_]: Files: MonadThrow](using fs2.Compiler[F, F]): BuildReader[F] =
+  def instance[F[_]: Files: Concurrent]: BuildReader[F] =
     buildFile =>
       Files[F]
         .readAll(buildFile)
