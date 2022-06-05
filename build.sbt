@@ -22,6 +22,8 @@ val commonSettings: Seq[Setting[_]] = Seq(
     "org.typelevel" %% "munit-cats-effect-3" % "1.0.7" % Test,
     "com.disneystreaming" %% "weaver-cats" % "0.7.12" % Test,
     "com.disneystreaming" %% "weaver-scalacheck" % "0.7.12" % Test,
+    "com.disneystreaming" %% "weaver-discipline" % "0.7.12" % Test,
+    "org.typelevel" %% "cats-laws" % "2.7.0" % Test,
     compilerPlugin("org.polyvariant" % "better-tostring" % "0.3.15" cross CrossVersion.full),
   ),
   testFrameworks += new TestFramework("weaver.framework.CatsEffect"),
