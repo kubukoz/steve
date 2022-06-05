@@ -8,6 +8,8 @@ import steve.Hash
 
 object Arbitraries {
 
+  given Arbitrary[String] = Arbitrary(Gen.identifier)
+
   given Arbitrary[SystemState] = Arbitrary(Gen.resultOf(SystemState.apply))
 
   given Arbitrary[Build.Command] = Arbitrary {

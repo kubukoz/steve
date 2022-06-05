@@ -21,6 +21,57 @@ object InterpreterTests extends SimpleIOSuite with Checkers {
       .getResult(interpreter.interpret(build))
       .rethrow
 
+  test("Upsert emits event") {
+
+    forall { (system: SystemState) =>
+      interpreter
+        .interpret(ResolvedBuild(system, List(Upsert("k", "v"))))
+        .compile
+        .toList
+        .map { events =>
+          assert(events.contains(OutputEvent.LogMessage("Upserting k: v")))
+        }
+
+    }
+
+  }
+
+  test("Delete emits event") {
+    forall { (system: SystemState) =>
+      interpreter
+        .interpret(ResolvedBuild(system, List(Delete("k"))))
+        .compile
+        .toList
+        .map { events =>
+          assert(events.contains(OutputEvent.LogMessage("Deleting k")))
+        }
+    }
+  }
+
+  test("Multiple commands emit multiple events") {
+
+    forall { (system: SystemState) =>
+      interpreter
+        .interpret(ResolvedBuild(system, List(Upsert("k", "v"), Delete("k"))))
+        .compile
+        .toList
+        .map { events =>
+          val expected = List(
+            "Upserting k: v",
+            "Deleting k",
+          )
+
+          val actual = events.collect { case OutputEvent.LogMessage(msg) =>
+            msg
+          }
+
+          assert.eql(actual, expected)
+        }
+
+    }
+
+  }
+
   test("any system + upsert => the key in the system has the given value") {
     forall { (system: SystemState, key: String, value: String) =>
       val build = ResolvedBuild(system, List(Upsert(key, value)))
