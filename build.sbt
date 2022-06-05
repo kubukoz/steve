@@ -1,7 +1,7 @@
 val Versions =
   new {
-    val tapir = "0.20.1"
-    val http4s = "0.23.11"
+    val tapir = "0.20.2"
+    val http4s = "0.23.12"
     val logback = "1.2.11"
   }
 
@@ -16,12 +16,12 @@ val commonSettings: Seq[Setting[_]] = Seq(
   scalacOptions -= "-Xfatal-warnings",
   scalacOptions += "-source:future",
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-effect" % "3.3.11",
+    "org.typelevel" %% "cats-effect" % "3.3.12",
     "co.fs2" %% "fs2-core" % "3.2.7",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "org.typelevel" %% "munit-cats-effect-3" % "1.0.7" % Test,
-    "com.disneystreaming" %% "weaver-cats" % "0.7.11" % Test,
-    "com.disneystreaming" %% "weaver-scalacheck" % "0.7.11" % Test,
+    "com.disneystreaming" %% "weaver-cats" % "0.7.12" % Test,
+    "com.disneystreaming" %% "weaver-scalacheck" % "0.7.12" % Test,
     compilerPlugin("org.polyvariant" % "better-tostring" % "0.3.15" cross CrossVersion.full),
   ),
   testFrameworks += new TestFramework("weaver.framework.CatsEffect"),
@@ -44,7 +44,7 @@ val nativeImageSettings: Seq[Setting[_]] = Seq(
 val shared = project.settings(
   commonSettings,
   libraryDependencies ++= Seq(
-    "com.softwaremill.sttp.client3" %% "fs2" % "3.5.2",
+    "com.softwaremill.sttp.client3" %% "fs2" % "3.6.2",
     "io.circe" %% "circe-fs2" % "0.14.0",
     "org.typelevel" %% "log4cats-core" % "2.3.1",
     "org.typelevel" %% "log4cats-noop" % "2.3.1",
