@@ -65,12 +65,13 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 - Initial support for streaming responses
 
-## [Episode 10](...)
+## [Episode 10](https://www.youtube.com/watch?v=Ig2rY0hR6JI)
 
 - Error handling in streaming
 - Fixing stream safety (issue from episode 9)
 - Fixing tests after streaming changes
 - Minor refactoring in streaming
+
 
 ## Episode ???
 
