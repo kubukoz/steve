@@ -1,7 +1,7 @@
 val Versions =
   new {
-    val tapir = "0.20.2"
-    val http4s = "0.23.12"
+    val tapir = "1.0.1"
+    val http4s = "0.23.13"
     val logback = "1.2.11"
   }
 
@@ -17,12 +17,12 @@ val commonSettings: Seq[Setting[_]] = Seq(
   scalacOptions += "-source:future",
   libraryDependencies ++= Seq(
     "org.typelevel" %% "cats-effect" % "3.3.12",
-    "co.fs2" %% "fs2-core" % "3.2.7",
+    "co.fs2" %% "fs2-core" % "3.2.8",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "com.disneystreaming" %% "weaver-cats" % "0.7.12" % Test,
     "com.disneystreaming" %% "weaver-scalacheck" % "0.7.12" % Test,
     "com.disneystreaming" %% "weaver-discipline" % "0.7.12" % Test,
-    "org.typelevel" %% "cats-laws" % "2.7.0" % Test,
+    "org.typelevel" %% "cats-laws" % "2.8.0" % Test,
     compilerPlugin("org.polyvariant" % "better-tostring" % "0.3.15" cross CrossVersion.full),
   ),
   testFrameworks += new TestFramework("weaver.framework.CatsEffect"),
@@ -47,8 +47,8 @@ val shared = project.settings(
   libraryDependencies ++= Seq(
     "com.softwaremill.sttp.client3" %% "fs2" % "3.6.2",
     "io.circe" %% "circe-fs2" % "0.14.0",
-    "org.typelevel" %% "log4cats-core" % "2.3.1",
-    "org.typelevel" %% "log4cats-noop" % "2.3.1",
+    "org.typelevel" %% "log4cats-core" % "2.3.2",
+    "org.typelevel" %% "log4cats-noop" % "2.3.2",
     "com.softwaremill.sttp.tapir" %% "tapir-core" % Versions.tapir,
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.tapir,
   ),
@@ -78,7 +78,7 @@ val client = project
       "org.http4s" %% "http4s-ember-client" % Versions.http4s,
       "com.softwaremill.sttp.tapir" %% "tapir-http4s-client" % Versions.tapir,
       "ch.qos.logback" % "logback-classic" % Versions.logback,
-      "com.monovore" %% "decline-effect" % "2.2.0",
+      "com.monovore" %% "decline-effect" % "2.3.0",
     ),
     nativeImageSettings,
   )
