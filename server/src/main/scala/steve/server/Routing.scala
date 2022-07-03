@@ -11,13 +11,13 @@ import sttp.tapir.json.circe.*
 import sttp.tapir.server.ServerEndpoint
 import sttp.tapir.server.http4s.Http4sServerInterpreter
 import sttp.tapir.server.http4s.Http4sServerOptions
-import sttp.tapir.server.interceptor.ValuedEndpointOutput
 import sttp.tapir.server.interceptor.exception.ExceptionHandler
 import steve.Executor
 import steve.protocol
 import steve.GenericServerError
 import sttp.capabilities.fs2.Fs2Streams
 import org.typelevel.log4cats.Logger
+import sttp.tapir.server.model.ValuedEndpointOutput
 
 object Routing {
 
@@ -30,14 +30,14 @@ object Routing {
 
     Http4sServerInterpreter[F](
       Http4sServerOptions
-        .customInterceptors[F, F]
-        .exceptionHandler { ex =>
-          Some(
+        .customiseInterceptors[F]
+        .exceptionHandler {
+          ExceptionHandler.pure { ex =>
             ValuedEndpointOutput(
               jsonBody[GenericServerError].and(statusCode(StatusCode.InternalServerError)),
               GenericServerError("server failed"),
-            )
-          )
+            ).some
+          }
         }
         .options
     )

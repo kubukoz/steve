@@ -82,8 +82,8 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 ## [Episode 12](...)
 
-- Pretty output (colors, Unicode)
 - Custom build file format
+- Pretty output (colors, Unicode)
 
 ## Episode ???
 
