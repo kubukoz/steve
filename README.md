@@ -73,7 +73,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Fixing tests after streaming changes
 - Minor refactoring in streaming
 
-## [Episode 11](...)
+## [Episode 11](https://www.youtube.com/watch?v=8dE0gZpm8us)
 
 - Prepare to do more streaming
 - Traverse instance for OutputEvent
