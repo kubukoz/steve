@@ -87,12 +87,12 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 ## Episode ???
 
+- Persistence
 - Pretty output (colors, Unicode)
 - Clean up streaming
 - (further) Extract logic from protocol
 - Add messages to be streamed
 - Pretty, streamed output?
-
 
 - Tagging images
 - Actual E2E tests
