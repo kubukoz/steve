@@ -82,11 +82,12 @@ These are the projects of my viewers who are following along (the ones I've foun
 
 ## [Episode 12](...)
 
-- Custom build file format
-- Pretty output (colors, Unicode)
+- Custom build file format parser + tests
+- Standalone mode (auto-starting server)
 
 ## Episode ???
 
+- Pretty output (colors, Unicode)
 - Clean up streaming
 - (further) Extract logic from protocol
 - Add messages to be streamed

@@ -8,6 +8,17 @@ import steve.Hash
 
 object FrontEnd {
 
+  final case class CLIRun(
+    command: CLICommand,
+    options: CLIOptions,
+  )
+
+  object CLIRun {
+    def remote(command: CLICommand): CLIRun = CLIRun(command, CLIOptions(standalone = false))
+
+    given Eq[CLIRun] = Eq.fromUniversalEquals
+  }
+
   enum CLICommand {
     case Build(context: Path)
     case Run(hash: Hash)
@@ -18,7 +29,9 @@ object FrontEnd {
     given Eq[CLICommand] = Eq.fromUniversalEquals
   }
 
-  val parseInput: Opts[CLICommand] = {
+  final case class CLIOptions(standalone: Boolean)
+
+  private val parseCLICommand: Opts[CLICommand] = {
     val build = Opts
       .subcommand("build", "Build an image")(
         Opts.argument[Path]("path")
@@ -38,5 +51,11 @@ object FrontEnd {
 
     build <+> run <+> list
   }
+
+  val parseCLIRun: Opts[CLIRun] =
+    (
+      parseCLICommand,
+      Opts.flag("standalone", "Run without server").orFalse.map(CLIOptions(_)),
+    ).mapN(CLIRun.apply)
 
 }

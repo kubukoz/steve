@@ -9,6 +9,7 @@ import com.monovore.decline.Help
 import java.nio.file.Path
 import java.nio.file.Paths
 import steve.Hash
+import steve.client.FrontEnd.CLIRun
 
 object FrontEndTests extends FunSuite {
 
@@ -16,12 +17,12 @@ object FrontEndTests extends FunSuite {
 
   def parseCommand(
     args: String*
-  ) = decline.Command("test", "Test command")(FrontEnd.parseInput).parse(args)
+  ) = decline.Command("test", "Test command")(FrontEnd.parseCLIRun).parse(args)
 
   test("build command") {
     assert.eql(
       parseCommand("build", "."),
-      Right(CLICommand.Build(Paths.get("."))),
+      Right(CLIRun.remote(CLICommand.Build(Paths.get(".")))),
     )
   }
 
@@ -29,11 +30,11 @@ object FrontEndTests extends FunSuite {
     val hashString = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     assert.eql(
       parseCommand("run", hashString),
-      Right(CLICommand.Run(Hash.parse(hashString).toOption.get)),
+      Right(CLIRun.remote(CLICommand.Run(Hash.parse(hashString).toOption.get))),
     )
   }
 
   test("list command") {
-    assert.eql(parseCommand("list"), Right(CLICommand.List))
+    assert.eql(parseCommand("list"), Right(CLIRun.remote(CLICommand.List)))
   }
 }

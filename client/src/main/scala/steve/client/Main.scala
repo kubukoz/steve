@@ -19,6 +19,7 @@ import steve.Executor
 import steve.OutputEvent
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
+import cats.arrow.FunctionK
 
 object Main extends CommandIOApp("steve", "Command line interface for Steve") {
 
@@ -76,13 +77,19 @@ object Main extends CommandIOApp("steve", "Command line interface for Steve") {
 
   given BuildReader[IO] = BuildReader.instance
 
-  val main: Opts[IO[ExitCode]] = FrontEnd.parseInput.map {
-    convertCommand[IO](_)
+  val main: Opts[IO[ExitCode]] = FrontEnd.parseCLIRun.map { case run =>
+    convertCommand[IO](run.command)
       .flatMap { cmd =>
-        // todo: enable with a flag?
-        // steve.server.Main.serve.surround {
-        exec[IO].use(eval[IO](_)(cmd))
-        // }
+
+        val runServer =
+          if (run.options.standalone)
+            steve.server.Main.serve.surroundK
+          else
+            FunctionK.id
+
+        runServer {
+          exec[IO].use(eval[IO](_)(cmd))
+        }
       }
       .flatMap(IO.println(_))
       .as(ExitCode.Success)
