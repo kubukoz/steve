@@ -54,6 +54,8 @@ object Build {
 
   }
 
+  given Eq[Build] = Eq.fromUniversalEquals
+
 }
 
 enum RunError extends Exception derives Codec.AsObject, Schema {
@@ -76,6 +78,11 @@ object Hash {
     } else {
       Left(s"Invalid hash: $s")
     }
+
+  def unsafeParse(s: String): Hash = parse(s)
+    .left
+    .map(new java.lang.IllegalArgumentException(_))
+    .fold(throw _, identity)
 
   given Codec[Hash] = Codec.from(
     Decoder[String].emap(parse),

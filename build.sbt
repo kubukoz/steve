@@ -51,6 +51,7 @@ val shared = project.settings(
     "org.typelevel" %% "log4cats-noop" % "2.3.2",
     "com.softwaremill.sttp.tapir" %% "tapir-core" % Versions.tapir,
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.tapir,
+    "org.typelevel" %% "cats-parse" % "0.3.7",
   ),
 )
 
