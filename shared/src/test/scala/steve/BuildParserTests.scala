@@ -75,6 +75,32 @@ object BuildParserTests extends FunSuite {
     )
   }
 
+  test("default build, trailing newlines") {
+    val input =
+      """
+        |
+        |UPSERT hello world
+        |DELETE hello
+        |
+        |""".stripMargin
+
+    assert.parses(
+      input,
+      Build(
+        Build.Base.EmptyImage,
+        List(
+          Build
+            .Command
+            .Upsert(
+              "hello",
+              "world",
+            ),
+          Build.Command.Delete("hello"),
+        ),
+      ),
+    )
+  }
+
   test("empty build") {
     assert.parses(
       "",

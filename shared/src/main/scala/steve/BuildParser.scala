@@ -49,8 +49,7 @@ object BuildParser {
         .orElse(P.pure(Build.Base.EmptyImage))
     }
 
-    val commands: P0[List[Build.Command]] = command
-      .repSep0(P.char('\n'))
+    val commands: P0[List[Build.Command]] = command.surroundedBy(P.char('\n').rep0).rep0
 
     (base, commands).mapN(Build.apply)
   }

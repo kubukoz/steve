@@ -37,7 +37,7 @@ object Main extends CommandIOApp("steve", "Command line interface for Steve") {
     case CLICommand.Build(ctx) =>
       BuildReader[F]
         .read(
-          Path.fromNioPath(ctx) / "steve.json"
+          Path.fromNioPath(ctx) / "build.steve"
         )
         .map(Command.Build(_))
     case CLICommand.Run(hash) => Command.Run(hash).pure[F]
