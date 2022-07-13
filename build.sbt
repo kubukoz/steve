@@ -16,7 +16,7 @@ val commonSettings: Seq[Setting[_]] = Seq(
   scalacOptions -= "-Xfatal-warnings",
   scalacOptions += "-source:future",
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-effect" % "3.3.13",
+    "org.typelevel" %% "cats-effect" % "3.3.14",
     "co.fs2" %% "fs2-core" % "3.2.9",
     // "org.typelevel" %% "cats-mtl" % "1.2.1",
     "com.disneystreaming" %% "weaver-cats" % "0.7.13" % Test,
