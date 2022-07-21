@@ -45,7 +45,7 @@ val nativeImageSettings: Seq[Setting[_]] = Seq(
 val shared = project.settings(
   commonSettings,
   libraryDependencies ++= Seq(
-    "com.softwaremill.sttp.client3" %% "fs2" % "3.6.2",
+    "com.softwaremill.sttp.client3" %% "fs2" % "3.7.1",
     "io.circe" %% "circe-fs2" % "0.14.0",
     "org.typelevel" %% "log4cats-core" % "2.3.2",
     "org.typelevel" %% "log4cats-noop" % "2.3.2",
