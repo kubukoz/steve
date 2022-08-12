@@ -61,9 +61,7 @@ object InterpreterTests extends SimpleIOSuite with Checkers {
             "Deleting k",
           )
 
-          val actual = events.collect { case OutputEvent.LogMessage(msg) =>
-            msg
-          }
+          val actual = events.collect { case OutputEvent.LogMessage(msg) => msg }
 
           assert.eql(actual, expected)
         }
