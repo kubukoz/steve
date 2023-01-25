@@ -80,7 +80,7 @@ These are the projects of my viewers who are following along (the ones I've foun
 - Migration to Weaver
 - Show build messages in the client
 
-## [Episode 12](...)
+## [Episode 12](https://www.youtube.com/watch?v=erzlLMnf_8s)
 
 - Custom build file format parser + tests
 - Standalone mode (auto-starting server)
