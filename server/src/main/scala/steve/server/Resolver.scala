@@ -1,7 +1,6 @@
 package steve.server
 
 import cats.MonadThrow
-import cats.effect.implicits.*
 import cats.implicits.*
 import steve.Build.Error.UnknownBase
 import steve.Build

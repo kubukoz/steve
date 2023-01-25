@@ -3,7 +3,6 @@ package steve.server
 import weaver.*
 import org.http4s.circe.CirceEntityCodec.*
 import org.http4s.client.dsl.io.*
-import cats.implicits.*
 import org.http4s.client.Client
 import org.http4s.Method.*
 import org.http4s.implicits.*

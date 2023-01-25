@@ -1,7 +1,6 @@
 package steve.client
 
 import cats.Applicative
-import cats.Functor
 import cats.effect.ExitCode
 import cats.effect.IO
 import cats.effect.Resource

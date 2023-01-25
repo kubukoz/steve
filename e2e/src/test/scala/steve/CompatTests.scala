@@ -4,7 +4,6 @@ import weaver.*
 import cats.effect.IO
 import sttp.tapir.client.http4s.Http4sClientInterpreter
 import org.http4s.client.Client
-import cats.effect.kernel.Async
 import cats.implicits.*
 import steve.client.ClientSideExecutor
 import steve.server.Routing

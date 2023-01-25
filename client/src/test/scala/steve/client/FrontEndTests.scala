@@ -6,7 +6,6 @@ import cats.implicits.*
 import steve.client.FrontEnd.CLICommand
 import cats.kernel.Eq
 import com.monovore.decline.Help
-import java.nio.file.Path
 import java.nio.file.Paths
 import steve.Hash
 import steve.client.FrontEnd.CLIRun

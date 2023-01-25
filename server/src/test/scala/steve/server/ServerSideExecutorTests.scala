@@ -1,13 +1,10 @@
 package steve.server
 
 import weaver.*
-import cats.Id
-import cats.effect.SyncIO
 import cats.effect.IO
 import cats.implicits.*
 import steve.Build
 import steve.OutputEvent
-import steve.Hash
 
 object ServerSideExecutorTests extends SimpleIOSuite {
 

@@ -1,10 +1,8 @@
 package steve.server
 
-import cats.data.Kleisli
 import cats.effect.kernel.Async
 import cats.implicits.*
 import org.http4s.HttpApp
-import org.http4s.dsl.Http4sDsl
 import sttp.model.StatusCode
 import sttp.tapir.*
 import sttp.tapir.json.circe.*
@@ -32,7 +30,7 @@ object Routing {
       Http4sServerOptions
         .customiseInterceptors[F]
         .exceptionHandler {
-          ExceptionHandler.pure { ex =>
+          ExceptionHandler.pure { _ =>
             ValuedEndpointOutput(
               jsonBody[GenericServerError].and(statusCode(StatusCode.InternalServerError)),
               GenericServerError("server failed"),

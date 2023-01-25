@@ -1,6 +1,5 @@
 package steve
 
-import cats.parse.Parser
 import cats.parse.Parser as P
 import cats.implicits.*
 import cats.parse.Parser0 as P0

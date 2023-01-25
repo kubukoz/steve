@@ -1,14 +1,13 @@
 package steve
 
 import io.circe.Codec
-import sttp.tapir.Schema
 import cats.Eq
 import cats.implicits.*
-import cats.Functor
 import cats.effect.Concurrent
 import cats.Traverse
 import cats.Applicative
 import cats.Eval
+import sttp.tapir.Schema
 
 //move to model
 enum OutputEvent[+A] derives Schema {
