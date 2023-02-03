@@ -5,7 +5,7 @@ val Versions =
     val logback = "1.2.11"
   }
 
-ThisBuild / scalaVersion := "3.3.0-RC1"
+ThisBuild / scalaVersion := "3.3.0-RC2"
 ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 

@@ -1,14 +1,11 @@
 package steve
 
-import sttp.tapir.Endpoint
-import io.circe.Codec as CirceCodec
-import sttp.model.StatusCode
-import sttp.capabilities.fs2.Fs2Streams
-import cats.effect.kernel.Temporal
-import io.circe.syntax.*
-import scala.concurrent.duration.*
 import cats.effect.kernel.Sync
+import io.circe.syntax.*
+import io.circe.Codec as CirceCodec
 import org.typelevel.log4cats.*
+import sttp.capabilities.fs2.Fs2Streams
+import sttp.model.StatusCode
 
 object protocol {
   import sttp.tapir.*
