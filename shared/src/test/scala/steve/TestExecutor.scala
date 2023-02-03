@@ -40,7 +40,7 @@ object TestExecutor {
         }
 
       val listImages: IO[List[Hash]] = runImpl
-        .collect { case (hash, TestResult.Success(state)) => hash }
+        .collect { case (hash, TestResult.Success(_)) => hash }
         .toList
         .pure[IO]
 

@@ -1,14 +1,9 @@
 package steve.server
 
-import cats.Applicative
-import cats.ApplicativeThrow
 import cats.MonadThrow
 import cats.effect.implicits.*
-import cats.effect.kernel.Ref
 import cats.effect.kernel.Resource
-import cats.effect.std.UUIDGen
 import cats.implicits.*
-import steve.Build.Error.UnknownHash
 import cats.effect.kernel.Sync
 import steve.Build
 import steve.Executor
@@ -52,14 +47,12 @@ object ServerSideExecutor {
     }
 
   def module[F[_]: Sync]: Resource[F, Executor[F]] = {
-    val unit = Applicative[F].unit.toResource
 
     given Interpreter[F] = Interpreter.instance[F]
     given Hasher[F] = Hasher.sha256Hasher[F]
 
     for {
       given Registry[F] <- Registry.instance[F].toResource
-      _ <- unit
       given Resolver[F] = Resolver.instance[F]
     } yield instance[F]
   }

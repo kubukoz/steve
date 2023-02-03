@@ -1,7 +1,6 @@
 package steve
 
 import weaver.*
-import cats.kernel.Eq
 import cats.implicits.*
 
 object BuildParserTests extends FunSuite {

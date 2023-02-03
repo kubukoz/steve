@@ -2,8 +2,6 @@ package steve.server
 
 import cats.implicits.*
 import cats.Applicative
-import cats.data.State
-import monocle.syntax.all.*
 import steve.SystemState
 import steve.OutputEvent
 import steve.Build

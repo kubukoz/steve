@@ -2,11 +2,9 @@ package steve
 
 import weaver.*
 import weaver.discipline.*
-import cats.kernel.laws.discipline.EqTests
 import cats.laws.discipline.TraverseTests
 
 import cats.data.Validated
-import cats.data.ZipLazyList
 import org.scalacheck.Arbitrary
 import cats.laws.discipline.arbitrary.*
 import org.scalacheck.Gen

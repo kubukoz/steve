@@ -1,9 +1,7 @@
 package steve.server
 
 import cats.MonadThrow
-import cats.effect.implicits.*
 import cats.effect.kernel.Ref
-import cats.effect.kernel.Resource
 import cats.implicits.*
 import steve.SystemState
 import steve.Hash

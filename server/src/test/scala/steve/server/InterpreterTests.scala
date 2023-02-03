@@ -1,11 +1,7 @@
 package steve.server
 
-import cats.Id
-import cats.catsInstancesForId
 import weaver.*
 import weaver.scalacheck.Checkers
-import org.scalacheck.Gen
-import org.scalacheck.Arbitrary
 import ResolvedBuild.Command.*
 import Arbitraries.given
 import steve.SystemState
@@ -61,9 +57,7 @@ object InterpreterTests extends SimpleIOSuite with Checkers {
             "Deleting k",
           )
 
-          val actual = events.collect { case OutputEvent.LogMessage(msg) =>
-            msg
-          }
+          val actual = events.collect { case OutputEvent.LogMessage(msg) => msg }
 
           assert.eql(actual, expected)
         }
